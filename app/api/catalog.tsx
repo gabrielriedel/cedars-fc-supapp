@@ -1,22 +1,20 @@
-import { createClient } from "@/utils/supabase/server";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { supabaseServer } from "@/utils/supabase/supabaseServer";
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { data, error } = await supabaseServer
+        .from('monday_first')
+        .select('activity_name, spots_left');
+    if (error) {
+        return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json(data);
+}
+
+
 // - Catalog.tsx
 //     - Selects available activities
 //     - Different async functions for different days? Hours?
-
-
-
-// export default async function handler(req, res) {
-//     const supabase = createClient();
-//     const { data, error } = await supabase
-//         .from('monday_acts')
-//         .select('activity_name, spaces_left');
-
-//     if (error) {
-//         console.error('Error fetching data:', error.message);
-//         return res.status(500).json({ error: error.message });
-//     }
-
-//     res.status(200).json(data);
-// }
 
 
