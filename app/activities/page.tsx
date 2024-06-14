@@ -1,43 +1,14 @@
-'use client'
+// pages/activities.tsx
+import React from 'react';
+import ActivitiesComponent from '@/components/ActivitiesComponent'; // Ensure the path is correct based on your project structure
 
-import React, { useEffect, useState } from 'react';
-
-interface Activity {
-    id: number;
-    activity_name: string;
-    spots_left: number;
-}
-
-const ActivitiesComponent: React.FC = () => {
-    const [activities, setActivities] = useState<Activity[]>([]);
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('/api/catalog');
-            const data: Activity[] = await response.json();
-            setActivities(data);
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
-
-    if (isLoading) return <div>Loading...</div>;
-    if (!activities.length) return <div>No activities found.</div>;
-
+const ActivitiesPage: React.FC = () => {
     return (
-        <div>
-            <h1>Activities</h1>
-            <ul>
-                {activities.map(activity => (
-                    <li key={activity.id}>
-                        {activity.activity_name} - Spots left: {activity.spots_left}
-                    </li>
-                ))}
-            </ul>
+        <div className="container mx-auto px-4">
+            <h1 className="text-2xl font-bold text-center my-6">Browse Activities</h1>
+            <ActivitiesComponent />
         </div>
     );
 };
 
-export default ActivitiesComponent;
+export default ActivitiesPage;
