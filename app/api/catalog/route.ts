@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from "@/utils/supabase/server";
 
 // Export a named export for the GET method
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
     const supabase = createClient();
     const { data, error } = await supabase
         .from('monday_acts')
