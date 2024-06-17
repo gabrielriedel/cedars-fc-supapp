@@ -13,8 +13,6 @@ export default async function Index() {
         </nav>
       </div>
       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-      <Link href="/activities">Activity Sign-ups</Link>
-      <Link href="/register">Register Other Party Members</Link>
       </div>
     </div>
   );

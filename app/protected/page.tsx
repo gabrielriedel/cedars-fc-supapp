@@ -26,8 +26,15 @@ const ProtectedPage: React.FC = async () => {
         </nav>
       </div>
       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-      <Link href="/activities">Activity Sign-ups</Link>
-      <Link href="/register">Register Other Party Members</Link>
+      <Link 
+      href="/activities"
+      className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+        Activity Sign-ups
+      </Link>
+      <Link 
+      href="/register"
+      className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+        Register Other Party Members</Link>
       </div>
     </div>
   );
