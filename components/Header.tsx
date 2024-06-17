@@ -1,3 +1,4 @@
+import CedarsLogo from "./CedarsLogo";
 import NextLogo from "./NextLogo";
 import SupabaseLogo from "./SupabaseLogo";
 
@@ -10,7 +11,7 @@ export default function Header() {
           target="_blank"
           rel="noreferrer"
         >
-          <SupabaseLogo />
+          <CedarsLogo />
         </a>
         <span className="border-l rotate-45 h-6" />
         <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
