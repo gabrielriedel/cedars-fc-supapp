@@ -8,13 +8,16 @@ export async function POST(req: NextRequest) {
         return new NextResponse(`Method ${req.method} Not Allowed`, { status: 405 });
     }
 
-    const { firstName, lastName, cabin, age, familyCode } = await req.json();
+    const { firstName, lastName, cabin, age} = await req.json();
     const supabase = createClient();
+    const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
     const { data, error } = await supabase
         .from('guests')
         .insert([
-            { first_name: firstName, last_name: lastName, cabin: cabin, age: age, family_code: familyCode }
+            { first_name: firstName, last_name: lastName, cabin: cabin, age: age, family_code: user?.id }
         ]);
         
 

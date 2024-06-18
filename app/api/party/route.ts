@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from "@/utils/supabase/server"; // Adjust import according to your setup
 
+
 export async function GET(req: NextRequest) {
     if (req.method !== 'GET') {
         // Return a response to disallow methods other than GET
@@ -9,11 +10,15 @@ export async function GET(req: NextRequest) {
 
     // Initialize Supabase client
     const supabase = createClient();
+    const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
     try {
         const { data, error } = await supabase
             .from('guests')
-            .select('first_name, last_name');
+            .select('first_name, last_name')
+            .eq('family_code', user?.id);
 
         if (error) {
             return new NextResponse(JSON.stringify({ message: 'Failed to fetch guests', details: error.message }), {

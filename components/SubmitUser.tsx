@@ -1,7 +1,6 @@
 // /components/SubmitUser.tsx
 'use client'
 import React, { useState } from 'react';
-import useUserId from '@/hooks/useUserId'; // Adjust the import path based on your project structure
 
 interface UserFormData {
     firstName: string;
@@ -12,8 +11,6 @@ interface UserFormData {
 
 const SubmitUser: React.FC = () => {
     const [formData, setFormData] = useState<UserFormData>({ firstName: '', lastName: '', cabin: '', age: '' });
-    const familyCode = useUserId(); // This is your user ID from Supabase
-    console.log(familyCode)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -39,11 +36,6 @@ const SubmitUser: React.FC = () => {
             return;
         }
 
-        if (!familyCode) {
-            alert('User must be logged in to submit data.');
-            return;
-        }
-
         try {
             const response = await fetch('/api/registerGuest', {
                 method: 'POST',
@@ -52,8 +44,7 @@ const SubmitUser: React.FC = () => {
                     firstName: formData.firstName,
                     lastName: formData.lastName,
                     cabin: formData.cabin,
-                    age,
-                    familyCode  // Include familyCode in the payload
+                    age
                 })
             });
 
