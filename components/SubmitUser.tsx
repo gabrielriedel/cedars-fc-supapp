@@ -1,16 +1,19 @@
 // /components/SubmitUser.tsx
 'use client'
 import React, { useState } from 'react';
+import useUserId from '@/hooks/useUserId'; // Adjust the import path based on your project structure
 
 interface UserFormData {
     firstName: string;
     lastName: string;
     cabin: string;
-    age: string;  // Storing age as string for input handling, conversion to number when submitting
+    age: string;
 }
 
 const SubmitUser: React.FC = () => {
     const [formData, setFormData] = useState<UserFormData>({ firstName: '', lastName: '', cabin: '', age: '' });
+    const familyCode = useUserId(); // This is your user ID from Supabase
+    console.log(familyCode)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -36,6 +39,11 @@ const SubmitUser: React.FC = () => {
             return;
         }
 
+        if (!familyCode) {
+            alert('User must be logged in to submit data.');
+            return;
+        }
+
         try {
             const response = await fetch('/api/registerGuest', {
                 method: 'POST',
@@ -44,7 +52,8 @@ const SubmitUser: React.FC = () => {
                     firstName: formData.firstName,
                     lastName: formData.lastName,
                     cabin: formData.cabin,
-                    age
+                    age,
+                    familyCode  // Include familyCode in the payload
                 })
             });
 
@@ -55,7 +64,7 @@ const SubmitUser: React.FC = () => {
             const result = await response.json();
             alert('Guest added successfully!');
             console.log(result);  // Log or handle response data as needed
-            setFormData({ firstName: '', lastName: '', cabin: '' , age: '' });  // Clear the form
+            setFormData({ firstName: '', lastName: '', cabin: '', age: '' });  // Clear the form
         } catch (error) {
             alert(error instanceof Error ? error.message : 'Failed to add guest');
         }
