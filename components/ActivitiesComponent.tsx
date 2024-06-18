@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import DropdownMenu from './DropdownMenu'; 
+import { Guest } from '@/components/Guest';
 
 interface Activity {
     id: number;
@@ -10,7 +11,11 @@ interface Activity {
     spaces_left: number;
 }
 
-const ActivitiesComponent: React.FC = () => {
+interface ActivitiesComponentProps {
+    selectedGuest: Guest | null;
+}
+
+const ActivitiesComponent: React.FC<ActivitiesComponentProps> = ({ selectedGuest }) => {
     const [activities, setActivities] = useState<Activity[]>([]);
     const [isLoading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,15 +44,25 @@ const ActivitiesComponent: React.FC = () => {
     }, []);
 
     const handleActivityUpdate = async (activityId: number, activityName: string) => {
+        if (!selectedGuest) {
+            console.error('No guest selected');
+            return;
+        }
+        
         try {
-            const response = await fetch(`/api/updateActivity/${activityId}`, {
+            const response = await fetch(`/api/registerActivities`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ activityName }),
+                body: JSON.stringify({
+                    firstName: selectedGuest.first_name,
+                    lastName: selectedGuest.last_name,
+                    activityName,
+                    activityId
+                }),
             });
-    
+
             if (!response.ok) throw new Error('Failed to update activity');
             // Optionally, handle the response data if needed
         } catch (err) {
@@ -63,7 +78,6 @@ const ActivitiesComponent: React.FC = () => {
 
     return (
         <div>
-            <h1>Activities</h1>
             <DropdownMenu 
                 activities={activities.map(activity => ({ 
                     id: activity.id, 

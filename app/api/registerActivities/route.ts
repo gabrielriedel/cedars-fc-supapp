@@ -8,21 +8,35 @@ export async function PATCH(req: NextRequest) {
 
     const supabase = createClient();
     const body = await req.json();
+    const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
     try {
         // Update the first table
         const { error: error1 } = await supabase
             .from('guests')
             .update({ m1: body.activityName })
-            .eq('id', body.id);
+            .eq('first_name', body.firstName)
+            .eq('last_name', body.lastName)
+            .eq('family_code',  user?.id);
 
         if (error1) throw error1;
 
         // Update the second table
+        const activityId = body.activityId;
+        if (typeof activityId !== 'number') {
+            return new NextResponse(JSON.stringify({ error: "Invalid activity ID" }), {
+                status: 400,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
+        // Call the custom function to decrement spaces
         const { error: error2 } = await supabase
-            .from('second_table')
-            .update({ anotherFieldToUpdate: body.anotherNewValue })
-            .eq('relatedId', body.relatedId);
+            .rpc('decrement_space', { activity_id_param: activityId });
 
         if (error2) throw error2;
 

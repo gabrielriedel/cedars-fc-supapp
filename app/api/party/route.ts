@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     try {
         const { data, error } = await supabase
             .from('guests')
-            .select('first_name, last_name')
+            .select('id, first_name, last_name')
             .eq('family_code', user?.id);
 
         if (error) {
