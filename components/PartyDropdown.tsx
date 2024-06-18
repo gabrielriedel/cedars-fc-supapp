@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { Guest } from '@/components/Guest';
 
 interface PartyDropdownProps {
-    setSelectedGuest: (guest: Guest) => void;
+    setSelectedGuest: (guest: Guest | null) => void; // Update to allow null
 }
 
 const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     const [guests, setGuests] = useState<Guest[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedValue, setSelectedValue] = useState(''); // State to keep track of the selected option
 
     useEffect(() => {
         const fetchGuests = async () => {
@@ -31,15 +32,17 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     }, []);
 
     const handleSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedValue(event.target.value);
         const selectedId = parseInt(event.target.value, 10);
         const selectedGuest = guests.find(guest => guest.id === selectedId);
-        if (selectedGuest) setSelectedGuest(selectedGuest);
+        setSelectedGuest(selectedGuest || null); // Pass null if no guest is found
     };
 
     return (
         <div>
             <label htmlFor="guestSelect">Choose a guest:</label>
-            <select id="guestSelect" name="guests" onChange={handleSelection} disabled={loading}>
+            <select id="guestSelect" name="guests" value={selectedValue} onChange={handleSelection} disabled={loading}>
+                <option value="">Select a guest</option> {/* Default unselected option */}
                 {loading ? (
                     <option>Loading guests...</option>
                 ) : (
