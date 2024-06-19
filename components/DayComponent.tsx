@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './DayComponent.css'; // Importing CSS
 
 interface Activity {
     id: number;
@@ -9,22 +10,24 @@ interface Activity {
 interface Guest {
     first_name: string;
     last_name: string;
-    // Other properties...
 }
 
 interface DayComponentProps {
     day: string;
     hours: number[];
-    selectedGuest: Guest | null;  // Passing selectedGuest as a prop
+    selectedGuest: Guest | null;
+    isSelectedDay: boolean;
+    toggleSelectedDay: () => void;
 }
 
-const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest }) => {
+const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, isSelectedDay, toggleSelectedDay }) => {
     const [activities, setActivities] = useState<Activity[][]>([]);
     const [isLoading, setLoading] = useState(true);
     const [selectedHour, setSelectedHour] = useState<number | null>(null);
 
     useEffect(() => {
         async function fetchActivities() {
+            if (!isSelectedDay) return;
             setLoading(true);
             try {
                 const responses = await Promise.all(
@@ -50,7 +53,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest }
         }
 
         fetchActivities();
-    }, [day, hours]);
+    }, [day, hours, isSelectedDay]);
 
     const handleActivityRegistration = async (activityId: number, activityName: string) => {
         if (!selectedGuest) {
@@ -71,35 +74,38 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest }
             });
 
             if (!response.ok) throw new Error('Failed to register activity');
-            alert("Registration successful!"); // Optionally update UI or alert user
+            alert("Registration successful!");
         } catch (err) {
             console.error('Failed to register activity:', err);
         }
     };
 
-    if (isLoading) return <div>Loading activities for {day}...</div>;
+    if (isLoading && isSelectedDay) return <div>Loading activities for {day}...</div>;
 
     return (
         <div>
-            <h3>{day}</h3>
-            {hours.map((hour, index) => (
-                <div key={hour}>
-                    <button onClick={() => setSelectedHour(selectedHour === hour ? null : hour)}>
+            <h3 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mb-4 mt-4" onClick={toggleSelectedDay}>
+                {day}
+            </h3>
+            {isSelectedDay && hours.map((hour, index) => (
+                <div key={hour} className="mt-3">
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-red-800 focus:outline-none focus:shadow-outline" onClick={() => setSelectedHour(selectedHour === hour ? null : hour)}>
                         Hour {hour}
                     </button>
                     {selectedHour === hour && (
                         <ul>
                             {activities[index] && activities[index].length > 0 ? activities[index].map(activity => (
-                                <button key={activity.id} onClick={() => handleActivityRegistration(activity.id, activity.activity_name)} style={{ display: 'block', margin: '5px', padding: '10px', background: 'lightgray', cursor: 'pointer' }}>
+                                <button key={activity.id} className="activity-button mt-4" onClick={() => handleActivityRegistration(activity.id, activity.activity_name)}>
                                     {activity.activity_name} - Spaces left: {activity.spaces_left}
                                 </button>
-                            )) : <li>No activities this hour.</li>}
+                            )) : <li className="no-activities">No activities this hour.</li>}
                         </ul>
                     )}
                 </div>
             ))}
         </div>
     );
+    
 };
 
 export default DayComponent;

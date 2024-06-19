@@ -39,19 +39,20 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     };
 
     return (
-        <div>
-            <label htmlFor="guestSelect">Choose a guest:</label>
-            <select id="guestSelect" name="guests" value={selectedValue} onChange={handleSelection} disabled={loading}>
-                <option value="">Select a guest</option> {/* Default unselected option */}
-                {loading ? (
-                    <option>Loading guests...</option>
-                ) : (
-                    guests.map((guest, index) => (
-                        <option key={index} value={guest.id}>{guest.first_name} {guest.last_name}</option>
-                    ))
-                )}
-            </select>
-        </div>
+        <div className="flex flex-col space-y-2">
+    <label htmlFor="guestSelect" className="block text-sm font-medium text-gray-700">Choose a guest:</label>
+    <select id="guestSelect" name="guests" value={selectedValue} onChange={handleSelection} disabled={loading} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+        <option value="">Select a guest</option> {/* Default unselected option */}
+        {loading ? (
+            <option>Loading guests...</option>
+        ) : (
+            guests.map((guest, index) => (
+                <option key={index} value={guest.id}>{guest.first_name} {guest.last_name}</option>
+            ))
+        )}
+    </select>
+</div>
+
     );
 };
 

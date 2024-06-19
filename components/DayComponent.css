@@ -1,0 +1,28 @@
+/* DayComponent.css */
+.day-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hour-button {
+    background-color: #f44336;
+    color: white;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.activity-button {
+    display: block;
+    margin: 5px;
+    padding: 10px;
+    background: lightblue;
+    cursor: pointer;
+}
+
+.no-activities {
+    margin: 5px;
+    padding: 10px;
+}
