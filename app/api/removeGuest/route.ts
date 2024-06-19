@@ -1,3 +1,4 @@
+// /app/api/removeGuest/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from "@/utils/supabase/server"; // Ensure the correct path according to your project setup
 
@@ -8,11 +9,9 @@ export async function DELETE(req: NextRequest) {
     }
 
     const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const guestId = req.nextUrl.searchParams.get('id'); // Accessing the guestId from the query parameter
 
-    const body = await req.json();
-
-    if (!user?.id) {
+    if (!guestId) {
         return new NextResponse(JSON.stringify({ message: 'Guest ID is required' }), {
             status: 400,
             headers: {
@@ -25,7 +24,7 @@ export async function DELETE(req: NextRequest) {
         const { error } = await supabase
             .from('guests')
             .delete()
-            .match({ first_name: body.firstName, last_name: body.lastName, family_code: user?.id });  // Ensure you're deleting the correct record by matching both ID and user's family_code
+            .match({ id: guestId }); // Ensure you're deleting the correct record
 
         if (error) {
             return new NextResponse(JSON.stringify({ message: 'Failed to delete guest', details: error.message }), {
