@@ -13,6 +13,19 @@ export async function PATCH(req: NextRequest) {
       } = await supabase.auth.getUser();
 
     try {
+        const { data: acts, error: actsError } = await supabase
+            .from('activities')
+            .select('spaces_left')
+            .eq('day', body.day)
+            .eq('hour', body.hour)
+            .eq('activity_name', body.activityName);
+
+        if (actsError) throw actsError;
+
+        if (acts[0].spaces_left <=0){
+            throw actsError
+        }
+
         const { data: rosters, error: rostersError } = await supabase
             .from('rosters')
             .select('activity_id')

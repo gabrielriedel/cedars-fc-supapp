@@ -42,7 +42,7 @@ const Page: React.FC = () => {
                   Back
               </Link>
               <PartyDropdown setSelectedGuest={setSelectedGuest} />
-              <label htmlFor="guestSelect" className="block text-green-800 font-medium py-2 pl-7 text-lg">
+              <label htmlFor="guestSelect" className="block text-blue-800 font-medium py-2 pl-7 text-lg">
                   Choose Activities:
               </label>
               {daysOfWeek.map(day => (
@@ -61,12 +61,12 @@ const Page: React.FC = () => {
               <h2 className="text-2xl font-bold mb-4">Instructions</h2>
               <p className="text-lg leading-relaxed">
                   Welcome to the Cedars Family Camp registration system! Here you can select activities for each day and hour.
-                  Follow these steps to ensure your family is ready for a fun-filled summer:
+                  Follow these steps to ensure your party is ready for a fun-filled summer:
               </p>
               <ul className="list-disc pl-4 mt-4">
-                  <li>Select a family member from the dropdown on the left.</li>
+                  <li>Select a party member from the dropdown on the left.</li>
                   <li>Choose the day and hour to view available activities.</li>
-                  <li>Click on an activity to register the selected family member.</li>
+                  <li>Click on an activity to register the selected party member.</li>
               </ul>
               <p className="mt-4">
                   If you have any questions or need further assistance, please contact our support team.
