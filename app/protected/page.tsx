@@ -17,30 +17,40 @@ const ProtectedPage: React.FC = async () => {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <div className="w-full">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+    <div className="flex flex-col items-center min-h-screen bg-white text-green-800 w-full">
+      <nav className="w-full bg-green-500 text-white shadow-md">
+        <div className="flex justify-between items-center py-4 px-6 w-full">
+          <h1 className="text-lg font-bold">Cedars Family Camp Dashboard</h1>
           <AuthButton />
-          </div>
-        </nav>
-      </div>
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-      <Link 
-      href="/activities"
-      className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
-        Activity Sign-ups
-      </Link>
-      <Link 
-      href="/register"
-      className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
-        Register Other Party Members</Link>
+        </div>
+      </nav>
+      <div className="flex-grow flex flex-col items-center justify-start pt-10 gap-6 px-6 w-full">
+        <section className="text-center mb-10">
+          <h2 className="text-2xl font-bold mb-4">Welcome to Your Dashboard!</h2>
+          <p className="max-w-3xl text-lg">
+            Here are your next steps to ensure you and your party are ready for a summer of adventure! Please follow the instructions below to sign up for activities and manage your group's registrations.
+          </p>
+        </section>
+        <div className="flex flex-col items-center gap-4">
+          <Link 
+            href="/activities"
+            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
+            Activity Sign-ups
+          </Link>
+          <Link 
+            href="/register"
+            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
+            Register Other Party Members
+          </Link>
+        </div>
       </div>
     </div>
   );
+  
 }
 
 export default ProtectedPage;
+
 
 
 // 'use server'
