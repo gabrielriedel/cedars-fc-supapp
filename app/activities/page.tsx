@@ -21,7 +21,7 @@ const Page: React.FC = () => {
         <div className="flex flex-col items-start justify-start w-full ml-20">
             <Link
         href="/protected"
-        className="absolute right-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
+        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
