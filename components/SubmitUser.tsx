@@ -61,53 +61,62 @@ const SubmitUser: React.FC = () => {
         }
     };
 
+
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="firstName">First Name:</label>
-                <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="lastName">Last Name:</label>
-                <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="cabin">Cabin:</label>
-                <input
-                    type="text"
-                    id="cabin"
-                    name="cabin"
-                    value={formData.cabin}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="age">Age:</label>
-                <input
-                    type="text"  // Using text input to simplify age handling
-                    id="age"
-                    name="age"
-                    value={formData.age}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+        <form onSubmit={handleSubmit}
+        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
+    <div className="mb-6">
+        <label className="text-md block mb-2" htmlFor="firstName">First Name:</label>
+        <input
+            className="rounded-md px-4 py-2 bg-inherit border"
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+        />
+    </div>
+    <div className="mb-6">
+        <label className="text-md block mb-2" htmlFor="lastName">Last Name:</label>
+        <input
+            className="rounded-md px-4 py-2 bg-inherit border"
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+        />
+    </div>
+    <div className="mb-6">
+        <label className="text-md block mb-2" htmlFor="cabin">Cabin:</label>
+        <input
+            className="rounded-md px-4 py-2 bg-inherit border"
+            type="text"
+            id="cabin"
+            name="cabin"
+            value={formData.cabin}
+            onChange={handleChange}
+        />
+    </div>
+    <div className="mb-6">
+        <label className="text-md block mb-2" htmlFor="age">Age:</label>
+        <input
+            className="rounded-md px-4 py-2 bg-inherit border"
+            type="text"  // Consider changing to type="number" if appropriate
+            id="age"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            required
+        />
+    </div>
+    <button type="submit" className="bg-green-700 rounded-md px-4 py-2 text-white mb-2 hover:bg-green-800 transition-colors">
+        Submit
+    </button>
+</form>
+
     );
 };
 
