@@ -40,7 +40,7 @@ const Page: React.FC = () => {
         Back
       </Link>
             <PartyDropdown setSelectedGuest={setSelectedGuest} />
-            <label htmlFor="guestSelect" className="block text-black font-medium py-2">
+            <label htmlFor="guestSelect" className="block text-black font-medium py-2 pl-7">
                         Choose Activities:
             </label>
             {daysOfWeek.map(day => (

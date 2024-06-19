@@ -85,28 +85,32 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
     if (isLoading && isSelectedDay) return <div>Loading activities for {day}...</div>;
 
     return (
-        <div>
-            <h3 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mb-4 mt-4" onClick={toggleSelectedDay}>
+        <div className="pl-10"> 
+            <h3 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mb-4 mt-4 text-center" onClick={toggleSelectedDay}>
                 {day}
             </h3>
             {isSelectedDay && hours.map((hour, index) => (
-                <div key={hour} className="mt-3">
+                <div key={hour} className="mt-3 pl-4">  
                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-red-800 focus:outline-none focus:shadow-outline" onClick={() => setSelectedHour(selectedHour === hour ? null : hour)}>
                         Hour {hour}
                     </button>
                     {selectedHour === hour && (
-                        <ul>
+                        <ul className="pl-4"> 
                             {activities[index] && activities[index].length > 0 ? activities[index].map(activity => (
-                                <button key={activity.id} className="activity-button mt-4" onClick={() => handleActivityRegistration(activity.id, activity.activity_name, hour, day)}>
-                                    {activity.activity_name} - Spaces left: {activity.spaces_left}
-                                </button>
-                            )) : <li className="no-activities">No activities this hour.</li>}
+                                <li key={activity.id} className="mt-2">
+                                    <button className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline" onClick={() => handleActivityRegistration(activity.id, activity.activity_name, hour, day)}>
+                                        {activity.activity_name} - Spaces left: {activity.spaces_left}
+                                    </button>
+                                </li>
+                            )) : <li className="no-activities text-gray-500 pl-4">No activities this hour.</li>}
                         </ul>
                     )}
                 </div>
             ))}
         </div>
     );
+    
+    
     
 };
 

@@ -39,23 +39,34 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     };
 
     return (
-        <div className="flex flex-col space-y-2">
-                        <label htmlFor="guestSelect" className="block text-black font-medium py-2">
-                        Choose a guest:
-            </label>
-            <select id="guestSelect" name="guests" value={selectedValue} onChange={handleSelection} disabled={loading} className="mt-1 block w-full pl-3 pr-10 py-2 text-white bg-green-500 hover:bg-green-700 focus:bg-green-600 border-none focus:outline-none focus:ring-2 focus:ring-green-700 rounded-md">
-                <option value="">Select a guest</option> {/* Default unselected option */}
-                {loading ? (
-                    <option>Loading guests...</option>
-                ) : (
-                    guests.map((guest, index) => (
-                        <option key={index} value={guest.id} className="bg-white text-black">
-                            {guest.first_name} {guest.last_name}
-                        </option>
-                    ))
-                )}
-            </select>
+        <div className="mt-10 w-full">
+        <div className="flex justify-center">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
+                Register for activities!
+            </h1>
         </div>
+        <div className="flex justify-start">
+            <div className="flex flex-col space-y-2 w-full max-w-md px-8">
+                <label htmlFor="guestSelect" className="block text-black font-medium py-2">
+                    Choose a party member to register for:
+                </label>
+                <select id="guestSelect" name="guests" value={selectedValue} onChange={handleSelection} disabled={loading} className="mt-1 block w-full pl-3 pr-10 py-2 text-white bg-green-500 hover:bg-green-700 focus:bg-green-600 border-none focus:outline-none focus:ring-2 focus:ring-green-700 rounded-md">
+                    <option value="">Select a party member</option> {/* Default unselected option */}
+                    {loading ? (
+                        <option>Loading guests...</option>
+                    ) : (
+                        guests.map((guest, index) => (
+                            <option key={index} value={guest.id} className="bg-white text-black">
+                                {guest.first_name} {guest.last_name}
+                            </option>
+                        ))
+                    )}
+                </select>
+            </div>
+        </div>
+    </div>
+    
+
     );
     
     
