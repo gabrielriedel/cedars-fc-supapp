@@ -18,6 +18,9 @@ const Page: React.FC = () => {
     return (
         <div className="flex flex-col items-start justify-start w-full ml-20">
             <PartyDropdown setSelectedGuest={setSelectedGuest} />
+            <label htmlFor="guestSelect" className="block text-black font-medium py-2">
+                        Choose Activities:
+            </label>
             {daysOfWeek.map(day => (
                 <DayComponent
                     key={day}

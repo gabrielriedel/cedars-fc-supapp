@@ -55,7 +55,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
         fetchActivities();
     }, [day, hours, isSelectedDay]);
 
-    const handleActivityRegistration = async (activityId: number, activityName: string) => {
+    const handleActivityRegistration = async (activityId: number, activityName: string, hour: number, day: string) => {
         if (!selectedGuest) {
             console.error('No guest selected');
             return;
@@ -69,7 +69,9 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                     firstName: selectedGuest.first_name,
                     lastName: selectedGuest.last_name,
                     activityName,
-                    activityId
+                    activityId,
+                    day,
+                    hour
                 })
             });
 
@@ -95,7 +97,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                     {selectedHour === hour && (
                         <ul>
                             {activities[index] && activities[index].length > 0 ? activities[index].map(activity => (
-                                <button key={activity.id} className="activity-button mt-4" onClick={() => handleActivityRegistration(activity.id, activity.activity_name)}>
+                                <button key={activity.id} className="activity-button mt-4" onClick={() => handleActivityRegistration(activity.id, activity.activity_name, hour, day)}>
                                     {activity.activity_name} - Spaces left: {activity.spaces_left}
                                 </button>
                             )) : <li className="no-activities">No activities this hour.</li>}

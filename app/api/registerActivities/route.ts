@@ -15,15 +15,14 @@ export async function PATCH(req: NextRequest) {
     try {
         // Update the first table
         const { error: error1 } = await supabase
-            .from('guests')
-            .update({ m1: body.activityName })
-            .eq('first_name', body.firstName)
-            .eq('last_name', body.lastName)
-            .eq('family_code',  user?.id);
+            .from('rosters')
+            .insert([
+                { first_name: body.firstName, last_name: body.lastName, 
+                    family_code: user?.id, activity_name: body.activityName, 
+                    activity_id: body.activityId, day: body.day, hour: body.hour}
+            ]);
 
         if (error1) throw error1;
-
-        // Update the second table
         const activityId = body.activityId;
         if (typeof activityId !== 'number') {
             return new NextResponse(JSON.stringify({ error: "Invalid activity ID" }), {
