@@ -63,61 +63,62 @@ const SubmitUser: React.FC = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-    <div className="mb-6">
-        <label className="text-md block mb-2" htmlFor="firstName">First Name:</label>
-        <input
-            className="rounded-md px-4 py-2 bg-inherit border"
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-        />
-    </div>
-    <div className="mb-6">
-        <label className="text-md block mb-2" htmlFor="lastName">Last Name:</label>
-        <input
-            className="rounded-md px-4 py-2 bg-inherit border"
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-        />
-    </div>
-    <div className="mb-6">
-        <label className="text-md block mb-2" htmlFor="cabin">Cabin:</label>
-        <input
-            className="rounded-md px-4 py-2 bg-inherit border"
-            type="text"
-            id="cabin"
-            name="cabin"
-            value={formData.cabin}
-            onChange={handleChange}
-        />
-    </div>
-    <div className="mb-6">
-        <label className="text-md block mb-2" htmlFor="age">Age:</label>
-        <input
-            className="rounded-md px-4 py-2 bg-inherit border"
-            type="text"  // Consider changing to type="number" if appropriate
-            id="age"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            required
-        />
-    </div>
-    <button type="submit" className="bg-green-700 rounded-md px-4 py-2 text-white mb-2 hover:bg-green-800 transition-colors">
-        Submit
-    </button>
-</form>
-
+        <div className="w-full max-w-lg px-8 pt-4 pb-10">
+            <form onSubmit={handleSubmit} className="animate-in flex flex-col justify-center gap-4 bg-white shadow-lg rounded-lg p-6">
+                <div className="mb-4">
+                    <label className="text-md font-medium block mb-2" htmlFor="firstName">First Name:</label>
+                    <input
+                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="text-md font-medium block mb-2" htmlFor="lastName">Last Name:</label>
+                    <input
+                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="text-md font-medium block mb-2" htmlFor="cabin">Cabin:</label>
+                    <input
+                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                        type="text"
+                        id="cabin"
+                        name="cabin"
+                        value={formData.cabin}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="text-md font-medium block mb-2" htmlFor="age">Age:</label>
+                    <input
+                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                        type="number"  // Changed to 'number' to enhance input appropriateness
+                        id="age"
+                        name="age"
+                        value={formData.age}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <button type="submit" className="bg-green-700 hover:bg-green-800 rounded-md px-4 py-2 text-white transition-colors">
+                    Submit
+                </button>
+            </form>
+        </div>
     );
+    
 };
 
 export default SubmitUser;

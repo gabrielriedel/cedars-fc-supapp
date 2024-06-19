@@ -23,7 +23,8 @@ export default async function Index() {
           Join us for a summer of adventure, memories, and JOY. Sign up or log in now to register for activities!
         </p>
         <p className="text-lg">
-          IMPORTANT: Only one member of your party needs to make an account as the person in charge of registering others for activities.
+          IMPORTANT: Only one member of your party needs to make an account. Parties could mean the people in your family, group of friends, or just yourself. As an example, if you and your extended family are joining us this session, then "party" could refer to a smaller family subgroup.
+          This way it is easy for you to sign-up for activities in one place with your party.
         </p>
         <div className="flex gap-5">
           <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors">
