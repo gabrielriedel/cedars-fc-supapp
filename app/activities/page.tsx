@@ -19,7 +19,6 @@ const Page: React.FC = () => {
 
     return (
       <div className="flex w-full min-h-screen bg-white text-green-800">
-          {/* Left Column for Menus and Dropdown */}
           <div className="flex flex-col pl-20 pt-8 w-3/5">
               <Link
                   href="/protected"
