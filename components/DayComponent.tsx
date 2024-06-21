@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './DayComponent.css'; // Importing CSS
+import Modal from './Modal'; // Ensure this path is correct
+import './DayComponent.css';
+import { Guest } from '@/components/Guest';
 
 interface Activity {
     id: number;
     activity_name: string;
     spaces_left: number;
-}
-
-interface Guest {
-    first_name: string;
-    last_name: string;
 }
 
 interface DayComponentProps {
@@ -24,6 +21,8 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
     const [activities, setActivities] = useState<Activity[][]>([]);
     const [isLoading, setLoading] = useState(true);
     const [selectedHour, setSelectedHour] = useState<number | null>(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     useEffect(() => {
         async function fetchActivities() {
@@ -57,7 +56,8 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
 
     const handleActivityRegistration = async (activityId: number, activityName: string, hour: number, day: string) => {
         if (!selectedGuest) {
-            console.error('No guest selected');
+            setModalMessage('No guest selected!');
+            setModalOpen(true);
             return;
         }
 
@@ -68,6 +68,8 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 body: JSON.stringify({
                     firstName: selectedGuest.first_name,
                     lastName: selectedGuest.last_name,
+                    age: selectedGuest.age,
+                    guest_id: selectedGuest.id,
                     activityName,
                     activityId,
                     day,
@@ -75,10 +77,20 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 })
             });
 
-            if (!response.ok) throw new Error('Failed to register activity');
-            alert("Registration successful!");
-        } catch (err) {
+            if (!response.ok) {
+                const errMsg = await response.text();
+                throw new Error(errMsg);
+            }
+            setModalMessage("Registration successful!");
+            setModalOpen(true);
+        } catch (err: unknown) { // Specifying 'unknown' is optional as it's the default type for errors now
             console.error('Failed to register activity:', err);
+            if (err instanceof Error) {
+                setModalMessage(err.message);
+            } else {
+                setModalMessage("An unexpected error occurred");
+            }
+            setModalOpen(true);
         }
     };
 
@@ -114,12 +126,11 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                     )}
                 </div>
             ))}
+            <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+                <p>{modalMessage}</p>
+            </Modal>
         </div>
     );
-    
-    
-    
-    
 };
 
 export default DayComponent;
