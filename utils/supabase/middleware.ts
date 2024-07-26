@@ -1,9 +1,8 @@
+// utils/supabase/middleware.ts
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
-  // This `try/catch` block is only here for the interactive tutorial.
-  // Feel free to remove once you have Supabase connected.
   try {
     // Create an unmodified response
     let response = NextResponse.next({
@@ -61,19 +60,33 @@ export const updateSession = async (request: NextRequest) => {
     );
 
     // This will refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/server-side/nextjs
     await supabase.auth.getUser();
+
+    // Add your role checking logic here
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if(user){
+      const userMetadata = typeof user.user_metadata === 'string' ? JSON.parse(user.user_metadata) : user.user_metadata;
+
+      const role = userMetadata.role;
+      console.log("Role:", role);
+
+      if (role && request.nextUrl.pathname.startsWith('/admin')) {
+        if (role !== "admin") {
+          return NextResponse.redirect(new URL("/not-authorized", request.url));
+        }
+      }
+    }
+
+    else {
+      if (request.nextUrl.pathname.startsWith('/admin')) {
+        return NextResponse.redirect(new URL("/login", request.url));
+      }
+    }
 
     return response;
   } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
     console.error("Error in middleware:", e);
-    // return NextResponse.next({
-    //   request: {
-    //     headers: request.headers,
-    //   },
-    // });
   }
 };

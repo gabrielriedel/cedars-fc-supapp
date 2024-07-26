@@ -66,6 +66,8 @@ const Page: React.FC = () => {
                   <li>Select a party member from the dropdown on the left.</li>
                   <li>Choose the day and hour to view available activities.</li>
                   <li>Click on an activity to register the selected party member.</li>
+                  <li>If you change your mind on your choice of activity, you may select a different one and the change will be made.</li>
+                  <li>Refresh the page for the most up to date "spaces left" count</li>
               </ul>
               <p className="mt-4">
                   If you have any questions or need further assistance, please contact our support team.
