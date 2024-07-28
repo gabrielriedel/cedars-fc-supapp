@@ -8,6 +8,7 @@ interface Activity {
     activity_name: string;
     spaces_left: number;
     description: string;
+    age_limit: string;
 }
 
 interface DayComponentProps {
@@ -125,7 +126,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                                         className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline" 
                                         onClick={() => handleActivityRegistration(activity.id, activity.activity_name, hour, day)}
                                     >
-                                        {activity.activity_name} - Spaces left: {activity.spaces_left}
+                                        {activity.activity_name} -- Spaces left: {activity.spaces_left} -- Minimum age: {activity.age_limit} 
                                     </button>
                                     {hoveredActivity === activity.id && (
                                         <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-green-200 text-black p-2 rounded shadow-lg transition-opacity duration-300 opacity-100">

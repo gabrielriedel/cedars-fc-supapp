@@ -8,6 +8,7 @@ interface Activity {
     activity_name: string;
     spaces_left: number;
     description: string;
+    age_limit: string;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -57,7 +58,7 @@ async function fetchActivitiesForDayAndHour(day: string, hour: string): Promise<
     const supabase = createClient();
     const { data, error } = await supabase
         .from('activities')
-        .select('id, activity_name, spaces_left, description')
+        .select('id, activity_name, spaces_left, description, age_limit')
         .eq('day', day)
         .eq('hour', hour);
 

@@ -32,7 +32,7 @@ export default function Login({
       return redirect("/login?message=Could not authenticate user");
     }
   
-    return redirect("/login?message=Check email to continue sign in process");
+    return redirect("/login?message=Success, now login!");
   };
   
 
