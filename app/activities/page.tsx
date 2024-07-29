@@ -38,7 +38,7 @@ const Page: React.FC = () => {
                   >
                       <polyline points="15 18 9 12 15 6" />
                   </svg>
-                  Back
+                  Back to dashboard
               </Link>
               <PartyDropdown setSelectedGuest={setSelectedGuest} />
               <label htmlFor="guestSelect" className="block text-blue-800 font-medium py-2 pl-7 text-lg">

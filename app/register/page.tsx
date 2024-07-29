@@ -26,7 +26,7 @@ const Home: React.FC = () => {
                     >
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
-                    Back
+                    Back to dashboard
                 </Link>
                 <div className="flex justify-center items-center mt-10 mb-8">
                     <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
@@ -34,6 +34,12 @@ const Home: React.FC = () => {
                     </h1>
                 </div>
                 <SubmitUser />
+                <Link 
+                href="/activities"
+                className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mt-4"
+            >
+                Go to Activity Sign-ups --{'>'}
+            </Link>
             </div>
             
             {/* Right Column for Instructions */}
