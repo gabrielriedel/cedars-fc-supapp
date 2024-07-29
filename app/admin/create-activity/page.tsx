@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const Home: React.FC = () => {
     return (
-        <div className="flex min-h-screen bg-white items-center justify-center">
-            <div className="relative w-full h-full max-w-4xl px-8 flex flex-col items-center justify-center">
+        <div className="flex flex-col w-full min-h-screen bg-white justify-center items-center">
+            <div className="w-full max-w-4xl px-8">
                 <Link
-                    href="/protected"
+                    href="/admin/dashboard"
                     className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center text-sm"
                 >
                     <svg
@@ -27,12 +27,14 @@ const Home: React.FC = () => {
                     </svg>
                     Back to dashboard
                 </Link>
-                <div className="flex justify-center items-center mt-10 mb-8">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                        Add Party Member
+                <div className="flex justify-center">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 my-4 bg-green-500 text-white rounded-full inline-block">
+                        Create Activity
                     </h1>
                 </div>
-                <ActivityCreate />
+                <div className="flex justify-center">
+                    <ActivityCreate />
+                </div>
             </div>
         </div>
     );

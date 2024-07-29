@@ -1,4 +1,3 @@
-// /components/SubmitUser.tsx
 'use client'
 import React, { useState } from 'react';
 
@@ -36,23 +35,16 @@ const ActivityCreate: React.FC = () => {
             const response = await fetch('/api/createActivity', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    activityName: formData.activityName,
-                    capacity: formData.capacity,
-                    hour: formData.hour,
-                    day: formData.day,
-                    description: formData.description,
-                    location: formData.location,
-                    ageLimit: formData.ageLimit
-                })
+                body: JSON.stringify(formData)
             });
 
             if (!response.ok) {
-                throw new Error('Failed to create activity');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to create activity');
             }
 
             const result = await response.json();
-            alert('Guest added successfully!');
+            alert('Activity added successfully!');
             console.log(result);  // Log or handle response data as needed
             setFormData({ activityName: '', capacity: '', hour: '', day: '', description: '', location: '', ageLimit: ''});  // Clear the form
         } catch (error) {
@@ -62,11 +54,11 @@ const ActivityCreate: React.FC = () => {
 
     return (
         <div className="w-full h-full flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="animate-in flex flex-col justify-center gap-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="activityName">Activity Name:</label>
+            <form onSubmit={handleSubmit} className="animate-in flex flex-col justify-center gap-2 bg-white shadow-lg rounded-lg p-4 w-full max-w-lg">
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="activityName">Activity Name:</label>
                     <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         type="text"
                         id="activityName"
                         name="activityName"
@@ -75,10 +67,10 @@ const ActivityCreate: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="capacity">Capacity:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="capacity">Capacity:</label>
                     <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         type="text"
                         id="capacity"
                         name="capacity"
@@ -87,10 +79,10 @@ const ActivityCreate: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="hour">Hour:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="hour">Hour:</label>
                     <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         type="text"
                         id="hour"
                         name="hour"
@@ -98,10 +90,10 @@ const ActivityCreate: React.FC = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="day">Day:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="day">Day:</label>
                     <select
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         id="day"
                         name="day"
                         value={formData.day}
@@ -115,10 +107,10 @@ const ActivityCreate: React.FC = () => {
                         <option value="Thursday">Thursday</option>
                     </select>
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="description">Description:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="description">Description:</label>
                     <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         type="text"
                         id="description"
                         name="description"
@@ -126,10 +118,10 @@ const ActivityCreate: React.FC = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="location">Location:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="location">Location:</label>
                     <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         type="text"
                         id="location"
                         name="location"
@@ -137,10 +129,10 @@ const ActivityCreate: React.FC = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="ageLimit">Grade Limit:</label>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="ageLimit">Grade Limit:</label>
                     <select
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
                         id="ageLimit"
                         name="ageLimit"
                         value={formData.ageLimit}
