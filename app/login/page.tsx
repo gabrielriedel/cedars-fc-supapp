@@ -16,16 +16,29 @@ export default function Login({
     const password = formData.get("password") as string;
     const supabase = createClient();
 
-    const {error } = await supabase.auth.signInWithPassword({
+    const { data: { user }, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
+    if (error || !user) {
       return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/protected");
+    // Fetch user role from user metadata
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user) {
+      const { user_metadata } = session.user;
+      const role = user_metadata?.role || "user"; // Default to "user" if no role is found
+
+      if (role === "admin") {
+        return redirect("/admin/dashboard");
+      } else {
+        return redirect("/protected");
+      }
+    }
+
+    return redirect("/login?message=Could not fetch user role");
   };
 
   return (

@@ -4,7 +4,6 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
   try {
-    // Create an unmodified response
     let response = NextResponse.next({
       request: {
         headers: request.headers,
@@ -20,16 +19,10 @@ export const updateSession = async (request: NextRequest) => {
             return request.cookies.get(name)?.value;
           },
           set(name: string, value: string, options: CookieOptions) {
-            // If the cookie is updated, update the cookies for the request and response
             request.cookies.set({
               name,
               value,
               ...options,
-            });
-            response = NextResponse.next({
-              request: {
-                headers: request.headers,
-              },
             });
             response.cookies.set({
               name,
@@ -38,16 +31,10 @@ export const updateSession = async (request: NextRequest) => {
             });
           },
           remove(name: string, options: CookieOptions) {
-            // If the cookie is removed, update the cookies for the request and response
             request.cookies.set({
               name,
               value: "",
               ...options,
-            });
-            response = NextResponse.next({
-              request: {
-                headers: request.headers,
-              },
             });
             response.cookies.set({
               name,
@@ -59,27 +46,20 @@ export const updateSession = async (request: NextRequest) => {
       },
     );
 
-    // This will refresh session if expired - required for Server Components
     await supabase.auth.getUser();
-
-    // Add your role checking logic here
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    if(user){
+    if (user) {
       const userMetadata = typeof user.user_metadata === 'string' ? JSON.parse(user.user_metadata) : user.user_metadata;
-
       const role = userMetadata.role;
-      console.log("Role:", role);
 
       if (role && request.nextUrl.pathname.startsWith('/admin')) {
         if (role !== "admin") {
           return NextResponse.redirect(new URL("/not-authorized", request.url));
         }
       }
-    }
-
-    else {
+    } else {
       if (request.nextUrl.pathname.startsWith('/admin')) {
         return NextResponse.redirect(new URL("/login", request.url));
       }
