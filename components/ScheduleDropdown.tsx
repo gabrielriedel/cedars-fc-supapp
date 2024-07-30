@@ -13,7 +13,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedGuest, setSelectedGuestState] = useState<Guest | null>(null);
     const [selectedDay, setSelectedDayState] = useState<string>('');
-    const [activities, setActivities] = useState<{ hour: string, activity_name: string }[]>([]);
+    const [activities, setActivities] = useState<{ hour: string, activity_name: string, location: string }[]>([]);
     const [activitiesLoading, setActivitiesLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -132,6 +132,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                                     <tr>
                                         <th className="py-2 px-4 border-b">Hour</th>
                                         <th className="py-2 px-4 border-b">Activity</th>
+                                        <th className="py-2 px-4 border-b">Location</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,6 +140,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                                         <tr key={index}>
                                             <td className="py-2 px-4 border-b">{activity.hour}</td>
                                             <td className="py-2 px-4 border-b">{activity.activity_name}</td>
+                                            <td className="py-2 px-4 border-b">{activity.location}</td>
                                         </tr>
                                     ))}
                                 </tbody>

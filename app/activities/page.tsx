@@ -40,11 +40,6 @@ const Page: React.FC = () => {
                   </svg>
                   Back to dashboard
               </Link>
-              <div className="flex justify-center">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                Register for activities!
-            </h1>
-        </div>
               <PartyDropdown setSelectedGuest={setSelectedGuest} />
               <label htmlFor="guestSelect" className="block text-blue-800 font-medium py-2 pl-7 text-lg">
                   Choose Activities:
