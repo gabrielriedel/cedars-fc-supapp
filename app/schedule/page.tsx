@@ -1,13 +1,8 @@
 'use client'
 import React, { useState } from 'react';
-import DayComponent from '@/components/DayComponent';  // Adjust path as needed
-import PartyDropdown from '@/components/PartyDropdown';  // Adjust path as needed
-import { Guest } from '@/components/Guest';  // Adjust path as needed
+import ScheduleDropdown from '@/components/ScheduleDropdown'; // Adjust path as needed
 import Link from "next/link";
-import Header from '@/components/Header';
-
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-const hoursOfDay = [1, 2, 3, 4, 5];
+import { Guest } from '@/components/Guest';  // Adjust path as needed
 
 const Page: React.FC = () => {
     const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
@@ -40,39 +35,19 @@ const Page: React.FC = () => {
                   </svg>
                   Back to dashboard
               </Link>
-              <div className="flex justify-center">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                Register for activities!
-            </h1>
-        </div>
-              <PartyDropdown setSelectedGuest={setSelectedGuest} />
-              <label htmlFor="guestSelect" className="block text-blue-800 font-medium py-2 pl-7 text-lg">
-                  Choose Activities:
-              </label>
-              {daysOfWeek.map(day => (
-                  <DayComponent
-                      key={day}
-                      day={day}
-                      hours={hoursOfDay}
-                      selectedGuest={selectedGuest}
-                      isSelectedDay={selectedDay === day}
-                      toggleSelectedDay={() => toggleSelectedDay(day)}
-                  />
-              ))}
+              <ScheduleDropdown setSelectedGuest={setSelectedGuest} setSelectedDay={setSelectedDay} />
           </div>
           {/* Right Column for Instructions */}
           <div className="w-2/5 bg-green-100 p-8 text-green-800">
               <h2 className="text-2xl font-bold mb-4">Instructions</h2>
               <p className="text-lg leading-relaxed">
-                  Welcome to the Cedars Family Camp registration system! Here you can select activities for each day and hour.
-                  Follow these steps to ensure your party is ready for a fun-filled summer:
+                  Instructions for viewing your daily schedules
               </p>
               <ul className="list-disc pl-4 mt-4">
-                  <li>Select a party member from the dropdown on the left.</li>
-                  <li>Choose the day and hour to view available activities.</li>
-                  <li>Click on an activity to register the selected party member.</li>
-                  <li>If you change your mind on your choice of activity, you may select a different one and the change will be made.</li>
-                  <li>Refresh the page for the most up to date "spaces left" count</li>
+                  <li>Select a party member and day from the dropdowns on the left.</li>
+                  <li>Your schedule for each hour of the day should appear below.</li>
+                  <li>PLEASE NOTE: this is not your finalized schedule. We reserve the right to alter the schedules on the backend as we see necessary.</li>
+                  <li>Your finalized daily schedule will be printed and placed in your mailbox each day</li>
               </ul>
               <p className="mt-4">
                   If you have any questions or need further assistance, please contact our support team.
@@ -80,12 +55,6 @@ const Page: React.FC = () => {
           </div>
       </div>
   );
-  
-  
-  
-    
-    
-    
 };
 
 export default Page;

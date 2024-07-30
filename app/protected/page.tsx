@@ -46,6 +46,11 @@ const ProtectedPage: React.FC = async () => {
             Activity Sign-ups
           </Link>
           <Link 
+            href="/schedule"
+            className="bg-yellow-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
+            View Activity Schedules
+          </Link>
+          <Link 
             href="/remove"
             className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
             View/Remove Party Members
