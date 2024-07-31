@@ -159,6 +159,7 @@ const ActivityCreate: React.FC = () => {
                         required
                     >
                         <option value="">Select grade</option>
+                        <option value="No Limit">No Limit</option>
                         <option value="Infant">Infant</option>
                         <option value="Toddler">Toddler</option>
                         <option value="Pre-K">Pre-K</option>
