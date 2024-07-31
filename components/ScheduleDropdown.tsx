@@ -1,4 +1,3 @@
-// ScheduleDropdown.tsx
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Guest } from '@/components/Guest';
@@ -13,8 +12,9 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedGuest, setSelectedGuestState] = useState<Guest | null>(null);
     const [selectedDay, setSelectedDayState] = useState<string>('');
-    const [activities, setActivities] = useState<{ hour: string, activity_name: string, location: string }[]>([]);
+    const [activities, setActivities] = useState<{ hour: string, activity_name: string, location: string, attire: string }[]>([]);
     const [activitiesLoading, setActivitiesLoading] = useState<boolean>(false);
+    const [titleVisible, setTitleVisible] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchGuests = async () => {
@@ -54,7 +54,8 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
         }
 
         setActivitiesLoading(true);
-        console.log(selectedGuest.id);
+        setTitleVisible(true);
+
         try {
             const response = await fetch('/api/scheduleView', {
                 method: 'POST',
@@ -122,25 +123,32 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                         Submit
                     </button>
                 </div>
+                {titleVisible && selectedGuest && selectedDay && (
+                    <div className="flex justify-center mt-6">
+                        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold border-b-2 border-green-500 pb-2">
+                            Schedule for {selectedGuest.first_name} {selectedGuest.last_name} on {selectedDay}
+                        </h2>
+                    </div>
+                )}
                 {activitiesLoading ? (
                     <div className="flex justify-center mt-4">Loading activities...</div>
                 ) : (
                     activities.length > 0 && (
                         <div className="mt-8 w-full max-w-md mx-auto">
-                            <table className="min-w-full bg-white">
-                                <thead>
+                            <table className="min-w-full bg-white border border-green-500">
+                                <thead className="bg-green-500 text-white">
                                     <tr>
-                                        <th className="py-2 px-4 border-b">Hour</th>
-                                        <th className="py-2 px-4 border-b">Activity</th>
-                                        <th className="py-2 px-4 border-b">Location</th>
+                                        <th className="py-2 px-4 border-b border-green-500">Hour</th>
+                                        <th className="py-2 px-4 border-b border-green-500">Activity</th>
+                                        <th className="py-2 px-4 border-b border-green-500">Location</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {activities.map((activity, index) => (
-                                        <tr key={index}>
-                                            <td className="py-2 px-4 border-b">{activity.hour}</td>
-                                            <td className="py-2 px-4 border-b">{activity.activity_name}</td>
-                                            <td className="py-2 px-4 border-b">{activity.location}</td>
+                                        <tr key={index} className="even:bg-green-100">
+                                            <td className="py-2 px-4 border-b border-green-500">{activity.hour}</td>
+                                            <td className="py-2 px-4 border-b border-green-500">{activity.activity_name}</td>
+                                            <td className="py-2 px-4 border-b border-green-500">{activity.location}</td>
                                         </tr>
                                     ))}
                                 </tbody>
