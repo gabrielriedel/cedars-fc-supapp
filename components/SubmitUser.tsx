@@ -108,7 +108,7 @@ const SubmitUser: React.FC = () => {
                         <option value="Infant">Infant</option>
                         <option value="Toddler">Toddler</option>
                         <option value="Pre-K">Pre-K</option>
-                        <option value="K">K</option>
+                        <option value="Kindergarten">Kindergarten</option>
                         <option value="1st Grade">1st Grade</option>
                         <option value="2nd Grade">2nd Grade</option>
                         <option value="3rd Grade">3rd Grade</option>

@@ -12,6 +12,28 @@ export async function PATCH(req: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
+    type Grade = 'No Limit' | 'Infant' | 'Toddler' | 'Pre-K' | 'Kindergarten' | '1st Grade' | '2nd Grade' | '3rd Grade' | '4th Grade' | '5th Grade' | '6th Grade' | '7th Grade' | '8th Grade' | 'High School' | 'College' | 'Adult';
+
+
+    const gradeMapping: Record<Grade, number> = {
+        'No Limit': -1,
+        'Infant': 0,
+        'Toddler': 1,
+        'Pre-K': 2,
+        'Kindergarten': 3,
+        '1st Grade': 4,
+        '2nd Grade': 5,
+        '3rd Grade': 6,
+        '4th Grade': 7,
+        '5th Grade': 8,
+        '6th Grade': 9,
+        '7th Grade': 10,
+        '8th Grade': 11,
+        'High School': 12,
+        'College': 13,
+        'Adult': 14
+    };
+
     try {
         const { data: acts, error: actsError } = await supabase
             .from('activities')
@@ -29,12 +51,17 @@ export async function PATCH(req: NextRequest) {
             });
         }
 
-        if (acts[0].age_limit > body.age) {
-            return new NextResponse(JSON.stringify({ error: "Sorry, this activity has age restrictions that do not match this guest's profile" }), {
+        const gradeLimit = acts[0].age_limit as Grade;
+        const guestGrade = body.grade as Grade;
+
+        if (gradeMapping[gradeLimit] > gradeMapping[guestGrade]) {
+            return new NextResponse(JSON.stringify({ error: "Sorry, this activity has grade restrictions that do not match this guest's profile" }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' }
             });
         }
+
+        
 
         const { data: rosters, error: rostersError } = await supabase
             .from('rosters')

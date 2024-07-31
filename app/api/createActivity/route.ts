@@ -7,9 +7,9 @@ export async function POST(req: NextRequest) {
         return new NextResponse(`Method ${req.method} Not Allowed`, { status: 405 });
     }
 
-    const { activityName, capacity, hour, day, description, location, ageLimit } = await req.json();
+    const { activityName, capacity, hour, day, description, attire, location, ageLimit } = await req.json();
 
-    if (!activityName || !capacity || !hour || !day || !description || !location || !ageLimit) {
+    if (!activityName || !capacity || !hour || !day || !description || !attire || !location || !ageLimit) {
         return new NextResponse(JSON.stringify({ message: 'All fields are required' }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' }
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const { data, error } = await supabase
         .from('activities')
         .insert([
-            { activity_name: activityName, capacity, spaces_left: capacity, hour, day, description, location, age_limit: ageLimit }
+            { activity_name: activityName, capacity, spaces_left: capacity, hour, day, description, location, age_limit: ageLimit, attire: attire }
         ]);
 
     if (error) {

@@ -7,12 +7,13 @@ interface UserFormData {
     hour: string;
     day: string;
     description: string;
+    attire: string;
     location: string;
     ageLimit: string;
 }
 
 const ActivityCreate: React.FC = () => {
-    const [formData, setFormData] = useState<UserFormData>({ activityName: '', capacity: '', hour: '', day: '', description: '', location: '', ageLimit: ''});
+    const [formData, setFormData] = useState<UserFormData>({ activityName: '', capacity: '', hour: '', day: '', description: '', attire: '', location: '', ageLimit: ''});
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -46,7 +47,7 @@ const ActivityCreate: React.FC = () => {
             const result = await response.json();
             alert('Activity added successfully!');
             console.log(result);  // Log or handle response data as needed
-            setFormData({ activityName: '', capacity: '', hour: '', day: '', description: '', location: '', ageLimit: ''});  // Clear the form
+            setFormData({ activityName: '', capacity: '', hour: '', day: '', description: '', attire: '', location: '', ageLimit: ''});  // Clear the form
         } catch (error) {
             alert(error instanceof Error ? error.message : 'Failed to create activity');
         }
@@ -81,14 +82,21 @@ const ActivityCreate: React.FC = () => {
                 </div>
                 <div className="mb-2">
                     <label className="text-sm font-medium block mb-1" htmlFor="hour">Hour:</label>
-                    <input
+                    <select
                         className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
-                        type="text"
                         id="hour"
                         name="hour"
                         value={formData.hour}
                         onChange={handleChange}
-                    />
+                        required
+                    >
+                        <option value="">Select Hour</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
                 </div>
                 <div className="mb-2">
                     <label className="text-sm font-medium block mb-1" htmlFor="day">Day:</label>
@@ -115,6 +123,17 @@ const ActivityCreate: React.FC = () => {
                         id="description"
                         name="description"
                         value={formData.description}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-2">
+                    <label className="text-sm font-medium block mb-1" htmlFor="attire">What to wear:</label>
+                    <input
+                        className="rounded-md px-3 py-1 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+                        type="text"
+                        id="attire"
+                        name="attire"
+                        value={formData.attire}
                         onChange={handleChange}
                     />
                 </div>
