@@ -68,6 +68,7 @@ const Page: React.FC = () => {
                   <li>Click on an activity to register the selected party member.</li>
                   <li>If you change your mind on your choice of activity, you may select a different one and the change will be made.</li>
                   <li>Refresh the page for the most up to date "spaces left" count</li>
+                  <li>If there was an activity that you really wanted to participate in but it was full, then leave a message with that activity so we can make an effort to get you in that activity a different day</li>
               </ul>
               <p className="mt-4">
                   If you have any questions or need further assistance, please contact our support team.
