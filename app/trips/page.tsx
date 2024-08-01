@@ -1,13 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import DayComponent from '@/components/DayComponent';  // Adjust path as needed
 import PartyDropdown from '@/components/PartyDropdown';  // Adjust path as needed
 import { Guest } from '@/components/Guest';  // Adjust path as needed
 import Link from "next/link";
-import Header from '@/components/Header';
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday'];
-const hoursOfDay = [1, 2, 3, 4, 5];
 
 const Page: React.FC = () => {
     const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
@@ -42,18 +38,8 @@ const Page: React.FC = () => {
               </Link>
               <PartyDropdown setSelectedGuest={setSelectedGuest} />
               <label htmlFor="guestSelect" className="block text-blue-800 font-medium py-2 pl-7 text-lg">
-                  Choose Activities:
+                  Choose Trip Day:
               </label>
-              {daysOfWeek.map(day => (
-                  <DayComponent
-                      key={day}
-                      day={day}
-                      hours={hoursOfDay}
-                      selectedGuest={selectedGuest}
-                      isSelectedDay={selectedDay === day}
-                      toggleSelectedDay={() => toggleSelectedDay(day)}
-                  />
-              ))}
           </div>
           {/* Right Column for Instructions */}
           <div className="w-2/5 bg-green-100 p-8 text-green-800">

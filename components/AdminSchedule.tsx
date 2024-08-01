@@ -20,7 +20,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
         const fetchGuests = async () => {
             setLoading(true);
             try {
-                const response = await fetch('/api/party');
+                const response = await fetch('/api/guests');
                 if (!response.ok) throw new Error('Failed to fetch guests');
                 
                 const data: Guest[] = await response.json();

@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest) {
     try {
         const { data: acts, error: actsError } = await supabase
             .from('activities')
-            .select('spaces_left, age_limit, location')
+            .select('spaces_left, age_limit, location, attire')
             .eq('day', body.day)
             .eq('hour', body.hour)
             .eq('activity_name', body.activityName);
@@ -86,7 +86,7 @@ export async function PATCH(req: NextRequest) {
             .insert([{ first_name: body.firstName, last_name: body.lastName, 
                        family_code: user?.id, activity_name: body.activityName, 
                        activity_id: body.activityId, day: body.day, hour: body.hour,
-                    guest_id: body.guest_id, location:acts[0].location }]);
+                    guest_id: body.guest_id, location:acts[0].location, attire:acts[0].attire }]);
 
         if (insertError) throw new Error("Failed to register for activity.");
 

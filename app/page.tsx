@@ -3,7 +3,6 @@ import logo from '@/assets/cedarslogo.png';
 import Image from 'next/image';
 
 export default async function Index() {
-
   return (
     <div className="flex-1 w-full flex flex-col items-center bg-white text-green-800">
       <nav className="w-full bg-green-500 text-white">
@@ -26,17 +25,24 @@ export default async function Index() {
           IMPORTANT: Only one member of your party needs to make an account. A party would be the group that you would like to sign-up for activities.
         </p>
         <div className="flex gap-5">
-          <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors">
+        <a
+            href="https://cedarscamps.org/programs/family-camp/" // Replace with your desired URL
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors"
+          >
             Learn More
-          </button>
-          <button className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-lg shadow border border-green-600 transition-colors">
+          </a>
+          <a
+            href="https://docs.google.com/document/d/1wDAyyI5sXilXUd2Kj5srhBPbfSaAh-j9CE1B7doxDSc/edit?usp=sharing" // Replace with your desired URL
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-lg shadow border border-green-600 transition-colors"
+          >
             View Activities
-          </button>
+          </a>
         </div>
       </div>
     </div>
-);
-
-
-  
+  );
 }

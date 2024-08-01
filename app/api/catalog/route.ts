@@ -60,7 +60,8 @@ async function fetchActivitiesForDayAndHour(day: string, hour: string): Promise<
         .from('activities')
         .select('id, activity_name, spaces_left, description, age_limit')
         .eq('day', day)
-        .eq('hour', hour);
+        .eq('hour', hour)
+        .order('activity_name', { ascending: true });
 
     if (error) {
         throw new Error(error.message);

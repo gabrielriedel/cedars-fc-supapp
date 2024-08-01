@@ -182,16 +182,17 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                             )}
                         </div>
                     ))}
-                    <div className="mt-3 flex items-center">
+                    <div className="mt-3 flex flex-col items-start">
+                        <label className="text-gray-700 mb-2 font-bold underline">Activities that were full that you wanted to do:</label>
                         <input 
                             type="text"
                             value={comment}
                             onChange={handleCommentChange}
-                            className="comment-input border rounded p-2 mr-2 flex-grow"
+                            className="comment-input border rounded p-2 mr-2 w-full"
                             placeholder="e.g. Archery, Cable Ski, and Tie Dye"
                         />
                         <button 
-                            className="submit-comment bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline" 
+                            className="submit-comment bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mt-2" 
                             onClick={handleCommentSubmit}
                         >
                             Submit
