@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import AllSchedules from '@/components/AllSchedules'; // Adjust path as needed
+import FamilySchedules from '@/components/FamilySchedules'; // Adjust path as needed
 import Link from "next/link";
 
 const Page: React.FC = () => {
@@ -26,7 +26,7 @@ const Page: React.FC = () => {
                 </svg>
                 Back to dashboard
             </Link>
-            <AllSchedules />
+            <FamilySchedules />
         </div>
     );
 };

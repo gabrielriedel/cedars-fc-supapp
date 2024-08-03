@@ -11,10 +11,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     try {
-        console.log("HERE")
         const { data, error } = await supabase
             .from('rosters')
-            .select('guest_id, first_name, last_name, hour, activity_name, location, attire')
+            .select('guest_id, first_name, last_name, hour, activity_name, location, attire, family_code')
             .eq('day', body.day);
 
         if (error) {
