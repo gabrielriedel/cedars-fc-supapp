@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 interface Roster {
     first_name: string;
     last_name: string;
+    grade: string;
 }
 
 interface Activity {
@@ -143,12 +144,12 @@ const DailyActivities: React.FC = () => {
                                         {hour.activities.map((activity, idx) => (
                                             <div key={idx} className="border border-blue-500 p-2 rounded-md text-xs">
                                                 <h4 className="text-sm font-bold mb-1">
-                                                    {activity.activity_name} @ {activity.location} - (Age Limit: {activity.capacity})
+                                                    {activity.activity_name} @ {activity.location} - (Capacity: {activity.capacity})
                                                 </h4>
                                                 <h5 className="font-medium">Roster:</h5>
                                                 <ul>
                                                     {activity.rosters.map((roster, rIdx) => (
-                                                        <li key={rIdx}>{roster.first_name} {roster.last_name}</li>
+                                                        <li key={rIdx}>{roster.first_name} {roster.last_name} - {roster.grade}</li>
                                                     ))}
                                                 </ul>
                                             </div>

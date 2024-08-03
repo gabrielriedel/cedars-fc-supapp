@@ -86,7 +86,7 @@ export async function PATCH(req: NextRequest) {
             .insert([{ first_name: body.firstName, last_name: body.lastName, 
                        family_code: user?.id, activity_name: body.activityName, 
                        activity_id: body.activityId, day: body.day, hour: body.hour,
-                    guest_id: body.guest_id, location:acts[0].location, attire:acts[0].attire }]);
+                    guest_id: body.guest_id, location:acts[0].location, attire:acts[0].attire, grade:body.grade }]);
 
         if (insertError) throw new Error("Failed to register for activity.");
 
