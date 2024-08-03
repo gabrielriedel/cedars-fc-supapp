@@ -23,7 +23,7 @@ export default function Login({
       password,
       options: {
         emailRedirectTo: `${origin}/auth/callback`,
-        data: { role: 'admin' }, // default role
+        data: { role: 'user' }, // default role
       },
     });
   
