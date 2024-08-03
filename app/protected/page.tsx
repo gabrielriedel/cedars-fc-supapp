@@ -36,6 +36,9 @@ const ProtectedPage: React.FC = async () => {
           <p className="max-w-3xl text-lg font-bold mb-4">
             Step 3: Fill out horse activity questionaire if you have not already 
           </p>
+          <p className="max-w-3xl text-lg font-bold mb-4">
+            Step 4: Sign-up for trips for each member of your party  
+          </p>
         </section>
         <div className="flex flex-col items-center gap-4">
           <Link 
@@ -56,6 +59,11 @@ const ProtectedPage: React.FC = async () => {
             Family Camp Horse Activity Questionnaire
 
           </a>
+          <Link 
+            href="/trips"
+            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
+            Trip Sign-ups
+          </Link>
           <Link 
             href="/schedule"
             className="bg-yellow-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
