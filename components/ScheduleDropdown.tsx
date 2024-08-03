@@ -10,11 +10,12 @@ interface ScheduleDropdownProps {
 const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, setSelectedDay }) => {
     const [guests, setGuests] = useState<Guest[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [selectedGuest, setSelectedGuestState] = useState<Guest | null>(null);
     const [selectedDay, setSelectedDayState] = useState<string>('');
-    const [activities, setActivities] = useState<{ hour: string, activity_name: string, location: string, attire: string }[]>([]);
-    const [activitiesLoading, setActivitiesLoading] = useState<boolean>(false);
+    const [schedules, setSchedules] = useState<{ guest_id: number, first_name: string, last_name: string, hour: string, activity_name: string, location: string, attire: string }[]>([]);
+    const [schedulesLoading, setSchedulesLoading] = useState<boolean>(false);
     const [titleVisible, setTitleVisible] = useState<boolean>(false);
+    const [familyCode, setFamilyCode] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchGuests = async () => {
@@ -35,45 +36,38 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
         fetchGuests();
     }, []);
 
-    const handleGuestSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = parseInt(event.target.value, 10);
-        const selectedGuest = guests.find(guest => guest.id === selectedId);
-        setSelectedGuest(selectedGuest || null); // Pass null if no guest is found
-        setSelectedGuestState(selectedGuest || null);
-    };
-
     const handleDaySelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDay(event.target.value);
         setSelectedDayState(event.target.value);
     };
 
     const handleSubmit = async () => {
-        if (!selectedGuest || !selectedDay) {
-            alert('Please select a guest and a day.');
+        if (!selectedDay) {
+            alert('Please select a day.');
             return;
         }
 
-        setActivitiesLoading(true);
+        setSchedulesLoading(true);
         setTitleVisible(true);
 
         try {
-            const response = await fetch('/api/scheduleView', {
+            const response = await fetch('/api/guestSchedules', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ guest_id: selectedGuest.id, day: selectedDay }),
+                body: JSON.stringify({ day: selectedDay }),
             });
 
-            if (!response.ok) throw new Error('Failed to fetch activities');
+            if (!response.ok) throw new Error('Failed to fetch schedules');
             
             const data = await response.json();
-            setActivities(data);
+            setSchedules(data);
         } catch (error) {
-            console.error('Error fetching activities:', error);
-            setActivities([]);
+            console.error('Error fetching schedules:', error);
+            setSchedules([]);
         }
-        setActivitiesLoading(false);
+        setSchedulesLoading(false);
     };
 
     return (
@@ -81,27 +75,8 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
             <div className="mt-10 w-full">
                 <div className="flex justify-center">
                     <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                        View Your Activity Schedule!
+                        View Family Activity Schedules!
                     </h1>
-                </div>
-                <div className="flex justify-start mt-4">
-                    <div className="flex flex-col space-y-2 w-full max-w-md px-8">
-                        <label htmlFor="guestSelect" className="block text-black font-medium py-2">
-                            Choose a party member to register for:
-                        </label>
-                        <select id="guestSelect" name="guests" onChange={handleGuestSelection} disabled={loading} className="mt-1 block w-full pl-3 pr-10 py-2 text-white bg-green-500 hover:bg-green-700 focus:bg-green-600 border-none focus:outline-none focus:ring-2 focus:ring-green-700 rounded-md">
-                            <option value="">Select a party member</option>
-                            {loading ? (
-                                <option>Loading guests...</option>
-                            ) : (
-                                guests.map((guest, index) => (
-                                    <option key={index} value={guest.id} className="bg-white text-black">
-                                        {guest.first_name} {guest.last_name}
-                                    </option>
-                                ))
-                            )}
-                        </select>
-                    </div>
                 </div>
                 <div className="flex justify-start mt-4">
                     <div className="flex flex-col space-y-2 w-full max-w-md px-8">
@@ -123,38 +98,53 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                         Submit
                     </button>
                 </div>
-                {titleVisible && selectedGuest && selectedDay && (
+                {titleVisible && selectedDay && (
                     <div className="flex justify-center mt-6">
                         <h2 className="text-lg md:text-xl lg:text-2xl font-semibold border-b-2 border-green-500 pb-2">
-                            Schedule for {selectedGuest.first_name} {selectedGuest.last_name} on {selectedDay}
+                            Schedules for Family on {selectedDay}
                         </h2>
                     </div>
                 )}
-                {activitiesLoading ? (
-                    <div className="flex justify-center mt-4">Loading activities...</div>
+                {schedulesLoading ? (
+                    <div className="flex justify-center mt-4">Loading schedules...</div>
                 ) : (
-                    activities.length > 0 && (
-                        <div className="mt-8 w-full max-w-md mx-auto">
-                            <table className="min-w-full bg-white border border-green-500">
-                                <thead className="bg-green-500 text-white">
-                                    <tr>
-                                        <th className="py-2 px-4 border-b border-green-500">Hour</th>
-                                        <th className="py-2 px-4 border-b border-green-500">Activity</th>
-                                        <th className="py-2 px-4 border-b border-green-500">Location</th>
-                                        <th className="py-2 px-4 border-b border-green-500">What to wear</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {activities.map((activity, index) => (
-                                        <tr key={index} className="even:bg-green-100">
-                                            <td className="py-2 px-4 border-b border-green-500">{activity.hour}</td>
-                                            <td className="py-2 px-4 border-b border-green-500">{activity.activity_name}</td>
-                                            <td className="py-2 px-4 border-b border-green-500">{activity.location}</td>
-                                            <td className="py-2 px-4 border-b border-green-500">{activity.attire}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                    schedules.length > 0 && (
+                        <div className="mt-8 w-full max-w-6xl mx-auto">
+                            {schedules.reduce((acc, curr) => {
+                                const guestIndex = acc.findIndex(guest => guest.guest_id === curr.guest_id);
+                                if (guestIndex > -1) {
+                                    acc[guestIndex].activities.push(curr);
+                                } else {
+                                    acc.push({ guest_id: curr.guest_id, first_name: curr.first_name, last_name: curr.last_name, activities: [curr] });
+                                }
+                                return acc;
+                            }, [] as { guest_id: number, first_name: string, last_name: string, activities: any[] }[]).map((guest, index) => (
+                                <div key={index} className="mb-8 border border-green-500 p-4 rounded-md">
+                                    <h3 className="text-lg font-bold mb-2">
+                                        {guest.first_name} {guest.last_name}
+                                    </h3>
+                                    <table className="min-w-full bg-white border border-green-500 mb-4">
+                                        <thead className="bg-green-500 text-white">
+                                            <tr>
+                                                <th className="py-2 px-4 border-b border-green-500">Hour</th>
+                                                <th className="py-2 px-4 border-b border-green-500">Activity</th>
+                                                <th className="py-2 px-4 border-b border-green-500">Location</th>
+                                                <th className="py-2 px-4 border-b border-green-500">What to wear</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {guest.activities.map((activity, idx) => (
+                                                <tr key={idx} className="even:bg-green-100">
+                                                    <td className="py-2 px-4 border-b border-green-500">{activity.hour}</td>
+                                                    <td className="py-2 px-4 border-b border-green-500">{activity.activity_name}</td>
+                                                    <td className="py-2 px-4 border-b border-green-500">{activity.location}</td>
+                                                    <td className="py-2 px-4 border-b border-green-500">{activity.attire}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ))}
                         </div>
                     )
                 )}
