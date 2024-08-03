@@ -36,7 +36,7 @@ const ProtectedPage: React.FC = async () => {
             Populate Activities
           </Link>
           <Link 
-            href="/admin/schedules"
+            href="/admin/individual-schedules"
             className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
             View Guest Individual Schedules
           </Link>
