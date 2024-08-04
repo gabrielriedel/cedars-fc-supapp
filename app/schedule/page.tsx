@@ -14,7 +14,7 @@ const Page: React.FC = () => {
 
     return (
       <div className="flex w-full min-h-screen bg-white text-green-800">
-          <div className="flex flex-col pl-20 pt-8 w-3/5">
+          <div className="flex flex-col pl-20 pt-8 w-full">
               <Link
                   href="/protected"
                   className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -36,22 +36,6 @@ const Page: React.FC = () => {
                   Back to dashboard
               </Link>
               <ScheduleDropdown setSelectedGuest={setSelectedGuest} setSelectedDay={setSelectedDay} />
-          </div>
-          {/* Right Column for Instructions */}
-          <div className="w-2/5 bg-green-100 p-8 text-green-800">
-              <h2 className="text-2xl font-bold mb-4">Instructions</h2>
-              <p className="text-lg leading-relaxed">
-                  Instructions for viewing your daily schedules
-              </p>
-              <ul className="list-disc pl-4 mt-4">
-                  <li>Select a party member and day from the dropdowns on the left.</li>
-                  <li>Your schedule for each hour of the day should appear below.</li>
-                  <li>PLEASE NOTE: this is not your finalized schedule. We reserve the right to alter the schedules on the backend as we see necessary.</li>
-                  <li>Your finalized daily schedule will be printed and placed in your mailbox each day</li>
-              </ul>
-              <p className="mt-4">
-                  If you have any questions or need further assistance, please contact our support team.
-              </p>
           </div>
       </div>
   );

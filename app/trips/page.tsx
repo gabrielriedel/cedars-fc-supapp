@@ -95,33 +95,34 @@ const Page: React.FC = () => {
 
     return (
         <div className="flex w-full min-h-screen bg-white text-green-800">
-            <div className="flex flex-col pl-20 pt-8 w-3/5">
-            <Link
-                  href="/protected"
-                  className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-              >
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-                  >
-                      <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                  Back to dashboard
-              </Link>
+            <div className="flex flex-col pl-20 pt-8 w-full">
+                <Link
+                    href="/protected"
+                    className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+                    >
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    Back to dashboard
+                </Link>
                 <PartyTwo setSelectedGuest={setSelectedGuest} />
                 <a 
                     href="https://docs.google.com/document/d/1wDAyyI5sXilXUd2Kj5srhBPbfSaAh-j9CE1B7doxDSc/edit#heading=h.h5z4n4udcq2g" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto my-4">
+                    className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto my-4"
+                >
                     Learn More About Trips
                 </a>
                 <label htmlFor="firstChoice" className="block text-blue-800 font-medium py-2 pl-7 text-lg">
@@ -166,13 +167,6 @@ const Page: React.FC = () => {
                 >
                     Register for Trips
                 </button>
-            </div>
-            {/* Right Column for Instructions */}
-            <div className="w-2/5 bg-green-100 p-8 text-green-800">
-                <h2 className="text-2xl font-bold mb-4">Instructions</h2>
-                <p className="text-lg leading-relaxed">
-                    Select a guest and their first and second choice trips from the dropdowns to register.
-                </p>
             </div>
             {modalOpen && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
