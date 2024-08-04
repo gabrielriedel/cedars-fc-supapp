@@ -37,7 +37,7 @@ const ProtectedPage: React.FC = async () => {
             Step 3: Fill out horse activity questionaire if you have not already 
           </p>
           <p className="max-w-3xl text-lg font-bold mb-4">
-            Step 4: Sign-up for trips for each member of your party  
+            Step 4: Sign-up for Wednesday Trip Day for each member of your party  
           </p>
         </section>
         <div className="flex flex-col items-center gap-4">

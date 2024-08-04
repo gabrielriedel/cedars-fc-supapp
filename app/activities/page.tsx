@@ -6,7 +6,7 @@ import { Guest } from '@/components/Guest';  // Adjust path as needed
 import Link from "next/link";
 import Header from '@/components/Header';
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+const daysOfWeek = ['Monday', 'Tuesday', 'Thursday'];
 const hoursOfDay = [1, 2, 3, 4];
 
 const Page: React.FC = () => {
