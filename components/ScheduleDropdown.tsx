@@ -16,6 +16,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
     const [titleVisible, setTitleVisible] = useState<boolean>(false);
     const [familyCode, setFamilyCode] = useState<string | null>(null);
 
+
     useEffect(() => {
         const fetchGuests = async () => {
             setLoading(true);
@@ -132,7 +133,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {guest.activities.sort((a, b) => a.hour.localeCompare(b.hour)).map((activity, idx) => (
+                                            {guest.activities.map((activity, idx) => (
                                                 <tr key={idx} className="even:bg-green-100">
                                                     <td className="py-2 px-4 border-b border-green-500">{activity.hour}</td>
                                                     <td className="py-2 px-4 border-b border-green-500">{activity.activity_name}</td>

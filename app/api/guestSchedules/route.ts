@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
             .from('rosters')
             .select('guest_id, first_name, last_name, hour, activity_name, location, attire, family_code')
             .eq('day', body.day)
-            .eq('family_code', user?.id);
+            .eq('family_code', user?.id)
+            .order('guest_id', { ascending: true })
+            .order('hour', { ascending: true });
 
         if (schedulesError) {
             return new NextResponse(JSON.stringify({ message: 'Failed to fetch schedules', details: schedulesError.message }), {
