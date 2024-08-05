@@ -14,7 +14,9 @@ export async function POST(req: NextRequest) {
         const { data, error } = await supabase
             .from('rosters')
             .select('guest_id, first_name, last_name, hour, activity_name, location, attire, family_code')
-            .eq('day', body.day);
+            .eq('day', body.day)
+            .order('guest_id', { ascending: true })
+            .order('hour', { ascending: true });
 
         if (error) {
             return new NextResponse(JSON.stringify({ message: 'Failed to fetch schedules', details: error.message }), {
