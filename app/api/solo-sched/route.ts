@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
             .from('rosters')
             .select('guest_id, first_name, last_name, hour, activity_name, location, attire')
             .eq('day', body.day)
+            .eq('guest_id', body.guest_id)
             .order('guest_id', { ascending: true })
             .order('hour', { ascending: true });;
 
