@@ -19,42 +19,18 @@ export const updateSession = async (request: NextRequest) => {
             return request.cookies.get(name)?.value;
           },
           set(name: string, value: string, options: CookieOptions) {
-            request.cookies.set({
-              name,
-              value,
-              ...options,
-            });
-            response.cookies.set({
-              name,
-              value,
-              ...options,
-            });
+            request.cookies.set({ name, value, ...options });
+            response.cookies.set({ name, value, ...options });
           },
           remove(name: string, options: CookieOptions) {
-            request.cookies.set({
-              name,
-              value: "",
-              ...options,
-            });
-            response.cookies.set({
-              name,
-              value: "",
-              ...options,
-            });
+            request.cookies.set({ name, value: "", ...options });
+            response.cookies.set({ name, value: "", ...options });
           },
         },
-      },
+      }
     );
 
-    await supabase.auth.getUser();
-
     const { data: { user } } = await supabase.auth.getUser();
-
-    if (user) {
-    const userMetadata = typeof user.user_metadata === 'string'
-      ? JSON.parse(user.user_metadata)
-      : user.user_metadata;
-    const role = userMetadata.role;
 
     const path = request.nextUrl.pathname;
 
@@ -65,30 +41,43 @@ export const updateSession = async (request: NextRequest) => {
       family_camp_attendee: "/family_camp/dashboard",
     };
 
-    // Check if user is accessing a protected route
-    for (const [expectedRole, protectedPath] of Object.entries(roleRoutes)) {
-      if (path.startsWith(protectedPath) && role !== expectedRole) {
-        return NextResponse.redirect(new URL("/not-authorized", request.url));
+    const rolesRequiringApproval = ["admin", "program_director", "counselor"];
+
+    if (user) {
+      const userMetadata = typeof user.user_metadata === "string"
+        ? JSON.parse(user.user_metadata)
+        : user.user_metadata;
+
+      const role = userMetadata?.role;
+      const approved = userMetadata?.approved;
+
+      // Block unapproved users for restricted roles
+      if (
+        rolesRequiringApproval.includes(role) &&
+        approved !== true &&
+        Object.values(roleRoutes).some(route => path.startsWith(route))
+      ) {
+        return NextResponse.redirect(new URL("/approval-pending", request.url));
+      }
+
+      // Check if user is trying to access a role-restricted path
+      for (const [expectedRole, protectedPath] of Object.entries(roleRoutes)) {
+        if (path.startsWith(protectedPath) && role !== expectedRole) {
+          return NextResponse.redirect(new URL("/not-authorized", request.url));
+        }
+      }
+
+    } else {
+      // Not logged in and trying to access protected routes
+      const protectedPaths = Object.values(roleRoutes);
+      if (protectedPaths.some(p => path.startsWith(p))) {
+        return NextResponse.redirect(new URL("/login", request.url));
       }
     }
-
-  } else {
-    // User not logged in and trying to access protected routes
-    const protectedPaths = [
-      "/admin",
-      "/pds/dashboard",
-      "/counselors/dashboard",
-      "/family_camp/dashboard",
-    ];
-
-    if (protectedPaths.some(path => path && request.nextUrl.pathname.startsWith(path))) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    } 
-  }
-
 
     return response;
   } catch (e) {
     console.error("Error in middleware:", e);
+    return NextResponse.redirect(new URL("/error", request.url));
   }
 };

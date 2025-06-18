@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/submit-button";
@@ -25,21 +24,37 @@ export default function Login({
       return redirect("/login?message=Could not authenticate user");
     }
 
-    // Fetch user role from user metadata
     const { data: { session } } = await supabase.auth.getSession();
     if (session && session.user) {
       const { user_metadata } = session.user;
-      const role = user_metadata?.role || "user"; // Default to "user" if no role is found
+      const role = user_metadata?.role || "user";
+      const approved = user_metadata?.approved;
 
-      if (role === "admin") {
-        return redirect("/admin/dashboard");
-      } else {
-        return redirect("/protected");
+      const rolesRequiringApproval = ["admin", "program_director", "counselor"];
+
+      // Redirect to approval-pending if not approved
+      if (rolesRequiringApproval.includes(role) && approved !== true) {
+        return redirect("/approval-pending");
+      }
+
+      // Approved + role-based redirects
+      switch (role) {
+        case "admin":
+          return redirect("/admin/dashboard");
+        case "program_director":
+          return redirect("/pds/dashboard");
+        case "counselor":
+          return redirect("/counselors/dashboard");
+        case "family_camp_attendee":
+          return redirect("/family_camp/dashboard");
+        default:
+          return redirect("/protected"); // fallback
       }
     }
 
     return redirect("/login?message=Could not fetch user role");
   };
+
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">

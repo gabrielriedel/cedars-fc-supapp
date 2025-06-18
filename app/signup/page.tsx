@@ -20,12 +20,18 @@ export default function Login({
 
     const supabase = createClient();
 
+    const rolesRequiringApproval = ["admin", "program_director", "counselor"];
+    const requiresApproval = rolesRequiringApproval.includes(role);
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${origin}/auth/callback`,
-        data: { role },
+        data: {
+          role,
+          approved: !requiresApproval, // false if approval is needed
+        },
       },
     });
 
@@ -35,7 +41,8 @@ export default function Login({
     }
 
     return redirect("/login?message=Success, now login!");
-  };
+};
+
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
