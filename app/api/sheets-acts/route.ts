@@ -5,8 +5,9 @@ import fs from 'fs';
 import path from 'path';
 
 // Load the service account credentials JSON file
-const credentialsPath = path.resolve('/Users/gaberiedel/Downloads/cedarsfc-39f7c0ca240a.json');
-const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf-8'));
+const credentials = JSON.parse(
+  Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_KEY!, "base64").toString("utf8")
+);
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
