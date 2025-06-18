@@ -20,7 +20,7 @@ const ProtectedPage: React.FC = async () => {
     <div className="flex flex-col items-center min-h-screen bg-white text-green-800 w-full">
       <nav className="w-full bg-green-500 text-white shadow-md">
         <div className="flex justify-between items-center py-4 px-6 w-full">
-          <h1 className="text-lg font-bold">CedarS CampS Admin Dashboard</h1>
+          <h1 className="text-lg font-bold">Cedars Family Camp Admin Dashboard</h1>
           <AuthButton />
         </div>
       </nav>
@@ -31,14 +31,14 @@ const ProtectedPage: React.FC = async () => {
         </section>
         <div className="flex flex-col items-center gap-4">
           <Link 
-            href="/admin/main_dash"
+            href="/admin/create-main-act"
             className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
-            Main Camp Dashboard 
+            Populate Activities
           </Link>
           <Link 
-            href="/admin/family_dash"
+            href="/admin/individual-schedules"
             className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
-            Family Camp Dashboard
+            View Guest Individual Schedules
           </Link>
         </div>
       </div>
