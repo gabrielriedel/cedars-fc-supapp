@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/utils/supabase/admin'; // <== use your new admin client
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/utils/supabase/admin";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const { data, error } = await supabaseAdmin.auth.admin.listUsers();
@@ -17,12 +19,14 @@ export async function GET() {
 
 export async function PUT(req: Request) {
   const { userId } = await req.json();
+  console.log("Approving user:", userId);
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
     user_metadata: { approved: true },
   });
 
   if (error) {
+    console.error("Error approving user:", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
