@@ -7,7 +7,7 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col items-center bg-white text-green-800">
       <nav className="w-full bg-green-500 text-white">
         <div className="max-w-4xl mx-auto flex justify-between items-center py-4 px-6">
-          <h1 className="text-lg font-bold">Cedars Family Camp</h1>
+          <h1 className="text-lg font-bold">CedarS CampS</h1>
           <LoginButton />
         </div>
       </nav>
@@ -16,7 +16,7 @@ export default async function Index() {
       </div>
       <div className="flex-1 flex flex-col items-center justify-center gap-10 p-5 animate-in">
         <h2 className="text-3xl font-bold text-center">
-          Welcome Home to Cedars Family Camp!
+          Welcome Home to Cedars!
         </h2>
         <p className="text-xl">
           Join us for a summer of adventure, memories, and JOY. Sign up or log in now to register for activities!
