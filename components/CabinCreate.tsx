@@ -2,27 +2,27 @@
 import React, { useState } from 'react';
 
 interface FormData {
-  activityName: string;
-  hour: string;
-  day: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface StickyData {
   session: string;
   year: string;
   program: string;
+  cabin: string;
 }
 
-const MainActivityCreate: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({ activityName: '', hour: '', day: '' });
-  const [stickyData, setStickyData] = useState<StickyData>({ session: '', year: '', program: ''});
+const CabinCreate: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({ firstName: '', lastName: ''});
+  const [stickyData, setStickyData] = useState<StickyData>({ session: '', year: '', program: '', cabin: ''});
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
 
-    if (name === "session" || name === "year" || name == "program") {
+    if (name === "session" || name === "year" || name == "program" || name == "cabin") {
       setStickyData({ ...stickyData, [name]: value });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -37,13 +37,13 @@ const MainActivityCreate: React.FC = () => {
       ...stickyData,
     };
 
-    if (!combinedData.activityName || !combinedData.hour || !combinedData.day || !combinedData.session || !combinedData.year || !combinedData.program) {
+    if (!combinedData.firstName || !combinedData.lastName || !combinedData.session || !combinedData.year || !combinedData.program || !combinedData.cabin)  {
       alert('All fields are required!');
       return;
     }
 
     try {
-      const response = await fetch('/api/createMainAct', {
+      const response = await fetch('/api/createCabin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(combinedData),
@@ -59,7 +59,7 @@ const MainActivityCreate: React.FC = () => {
       console.log(result);
 
       // Clear only part of the form
-      setFormData({ activityName: '', hour: '', day: '' });
+      setFormData({ firstName: '', lastName: ''});
       // stickyData (year/session) is retained
 
     } catch (error) {
@@ -124,54 +124,65 @@ const MainActivityCreate: React.FC = () => {
             <option value="Ark">Ark</option>
           </select>
         </div>
+
         <div className="mb-2">
-          <label className="text-sm font-medium text-black block mb-1" htmlFor="activityName">Activity Name:</label>
+          <label className="text-sm font-medium text-black block mb-1" htmlFor="cabin">Cabin:</label>
+          <select
+            className="rounded-md px-3 py-1 bg-gray-50 text-black border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
+            id="cabin"
+            name="cabin"
+            value={stickyData.cabin}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Cabin</option>
+            <option value="Whippoorwhills">Whippoorwhills</option>
+            <option value="Bobolinks">Bobolinks</option>
+            <option value="Cardinals">Cardinals</option>
+            <option value="Towhees">Towhees</option>
+            <option value="Owls">Owls</option>
+            <option value="Meadowlarks">Meadowlarks</option>
+            <option value="Doves">Doves</option>
+            <option value="Blue Herons">Blue Herons</option>
+            <option value="Robins">Robins</option>
+            <option value="Bluebirds">Towhees</option>
+            <option value="Trailblazers">Trailblazers</option>
+            <option value="Range Rieders">Range Rieders</option>
+            <option value="Pioneers">Pioneers</option>
+            <option value="Explorers">Explorers</option>
+            <option value="Uplifters">Uplifters</option>
+            <option value="Lyons Den">Lyons Den</option>
+            <option value="Lamplighters">Lamplighters</option>
+            <option value="Warriors">Warriors</option>
+            <option value="Pathfinders">Pathfinders</option>
+            <option value="Big G">Big G</option>
+          </select>
+        </div>
+
+        <div className="mb-2">
+          <label className="text-sm font-medium text-black block mb-1" htmlFor="firstName">First Name:</label>
           <input
             className="rounded-md px-3 py-1 bg-gray-50 text-black border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
             type="text"
-            id="activityName"
-            name="activityName"
-            value={formData.activityName}
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
             required
           />
         </div>
 
         <div className="mb-2">
-          <label className="text-sm font-medium text-black block mb-1" htmlFor="hour">Hour:</label>
-          <select
+          <label className="text-sm font-medium text-black block mb-1" htmlFor="lastName">Last Name:</label>
+          <input
             className="rounded-md px-3 py-1 bg-gray-50 text-black border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
-            id="hour"
-            name="hour"
-            value={formData.hour}
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
             onChange={handleChange}
             required
-          >
-            <option value="">Select Hour</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-
-        <div className="mb-2">
-          <label className="text-sm font-medium text-black block mb-1" htmlFor="day">Day:</label>
-          <select
-            className="rounded-md px-3 py-1 bg-gray-50 text-black border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 w-full"
-            id="day"
-            name="day"
-            value={formData.day}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Day</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-          </select>
+          />
         </div>
 
         <button type="submit" className="bg-green-700 hover:bg-green-800 rounded-md px-4 py-2 text-white transition-colors w-full">
@@ -182,4 +193,4 @@ const MainActivityCreate: React.FC = () => {
   );
 };
 
-export default MainActivityCreate;
+export default CabinCreate;
