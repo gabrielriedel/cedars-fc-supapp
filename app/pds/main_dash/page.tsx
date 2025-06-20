@@ -40,6 +40,11 @@ const ProtectedPage: React.FC = async () => {
             className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
             Add Campers to Cabins
           </Link>
+          <Link 
+            href="/pds/view-cabins"
+            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
+            View Cabins
+          </Link>
         </div>
       </div>
     </div>
