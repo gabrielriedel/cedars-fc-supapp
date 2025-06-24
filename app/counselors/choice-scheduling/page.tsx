@@ -75,6 +75,7 @@ const AssignMainActivities: React.FC = () => {
         year,
         day,
         hour,
+        program, 
         choice_type: 'first'
       },
       {
@@ -86,6 +87,7 @@ const AssignMainActivities: React.FC = () => {
         year,
         day,
         hour,
+        program, 
         choice_type: 'second'
       }
     ];
@@ -128,13 +130,29 @@ const AssignMainActivities: React.FC = () => {
           <option value="Nest">Nest</option>
         </select>
 
-        <input
-          type="text"
-          value={cabin}
-          onChange={e => setCabin(e.target.value)}
-          placeholder="Cabin Name"
-          className="border text-black rounded px-3 py-1"
-        />
+        <select value={cabin} onChange={e => setCabin(e.target.value)} className="border text-black rounded px-3 py-1">
+          <option value="">Select Cabin</option>
+            <option value="Whippoorwhills">Whippoorwhills</option>
+            <option value="Bobolinks">Bobolinks</option>
+            <option value="Cardinals">Cardinals</option>
+            <option value="Towhees">Towhees</option>
+            <option value="Owls">Owls</option>
+            <option value="Meadowlarks">Meadowlarks</option>
+            <option value="Doves">Doves</option>
+            <option value="Blue Herons">Blue Herons</option>
+            <option value="Robins">Robins</option>
+            <option value="Bluebirds">Towhees</option>
+            <option value="Trailblazers">Trailblazers</option>
+            <option value="Range Rieders">Range Rieders</option>
+            <option value="Pioneers">Pioneers</option>
+            <option value="Explorers">Explorers</option>
+            <option value="Uplifters">Uplifters</option>
+            <option value="Lyons Den">Lyons Den</option>
+            <option value="Lamplighters">Lamplighters</option>
+            <option value="Warriors">Warriors</option>
+            <option value="Pathfinders">Pathfinders</option>
+            <option value="Big G">Big G</option>
+          </select>
 
         <select value={day} onChange={e => setDay(e.target.value)} className="border text-black rounded px-3 py-1">
           <option value="">Select Day</option>
