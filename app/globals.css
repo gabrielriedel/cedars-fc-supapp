@@ -40,3 +40,28 @@
     transform: translateY(0);
   }
 }
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  select,
+  button,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  .print\\:block {
+    display: block !important;
+  }
+
+  .print\\:text-black {
+    color: black !important;
+  }
+
+  .print\\:bg-white {
+    background-color: white !important;
+  }
+}
