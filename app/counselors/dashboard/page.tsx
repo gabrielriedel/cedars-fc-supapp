@@ -20,13 +20,13 @@ const ProtectedPage: React.FC = async () => {
     <div className="flex flex-col items-center min-h-screen bg-white text-green-800 w-full">
       <nav className="w-full bg-green-500 text-white shadow-md">
         <div className="flex justify-between items-center py-4 px-6 w-full">
-          <h1 className="text-lg font-bold">CedarS CampS Program Director Dashboard</h1>
+          <h1 className="text-lg font-bold">CedarS CampS Counselor Dashboard</h1>
           <AuthButton />
         </div>
       </nav>
       <div className="flex-grow flex flex-col items-center justify-start pt-10 gap-6 px-6 w-full">
         <section className="text-center mb-10">
-          <h2 className="text-2xl font-bold mb-4">Welcome to Your Program Director Dashboard!</h2>
+          <h2 className="text-2xl font-bold mb-4">Welcome to Your Counselor Dashboard!</h2>
 
         </section>
         <div className="flex flex-col items-center gap-4">
