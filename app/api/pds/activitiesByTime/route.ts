@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from('main_activities_roster')
+    .from('main_activities')
     .select('day, hour, activity_name')
     .eq('year', year)
     .eq('session', session)
