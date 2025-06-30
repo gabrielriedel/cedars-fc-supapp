@@ -48,49 +48,53 @@ const ActivityScheduleView: React.FC = () => {
           <style>
             body {
               font-family: sans-serif;
-              padding: 20px;
+              padding: 10px;
+              margin: 0;
               background: white;
               color: black;
+              font-size: 11px;
             }
             h2 {
               text-align: center;
               color: #1f2937;
-              margin-bottom: 30px;
+              margin-bottom: 12px;
+              font-size: 16px;
             }
             .grid {
               display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-              gap: 20px;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 10px;
             }
             .card {
-              border: 2px solid #000;
-              border-radius: 8px;
-              padding: 16px;
+              border: 1px solid #000;
+              border-radius: 4px;
+              padding: 8px;
               background: #f9fafb;
+              break-inside: avoid;
             }
             .card h3 {
               text-align: center;
-              margin-bottom: 16px;
-              font-size: 1.25rem;
+              margin-bottom: 8px;
+              font-size: 13px;
               color: #1f2937;
             }
             .activity {
               border: 1px solid #666;
-              border-radius: 6px;
-              padding: 10px;
+              border-radius: 4px;
+              padding: 4px;
               background: white;
-              margin-bottom: 14px;
+              margin-bottom: 6px;
             }
             .activity h4 {
-              margin: 0 0 6px;
-              font-size: 1rem;
+              margin: 0 0 4px;
+              font-size: 11px;
               color: #047857;
             }
             .activity ul {
-              margin-left: 1em;
-              padding-left: 0;
+              margin: 0;
+              padding-left: 16px;
               list-style: disc;
-              font-size: 0.9rem;
+              font-size: 10px;
               color: #333;
             }
           </style>

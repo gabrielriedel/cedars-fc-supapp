@@ -55,20 +55,74 @@ const CamperChoiceSchedule: React.FC = () => {
   }, {});
 
   return (
-    <div className="bg-white text-black min-h-screen py-10 px-6 sm:px-12">
-      <h1 className="text-4xl font-bold text-center text-green-700 mb-10">
-        Camper First-Choice Activity Grid
-      </h1>
+    <div className="bg-white text-black min-h-screen py-6 px-4 sm:px-8">
+      <style jsx global>{`
+        @media print {
+          @page {
+            size: landscape;
+            margin: 0.5in;
+          }
 
-      {/* Filter Controls */}
-      <div className="flex flex-wrap gap-4 justify-center mb-12 print:hidden">
-        <select value={year} onChange={e => setYear(e.target.value)} className="border border-gray-300 rounded px-4 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
+          html, body {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+          }
+
+          .print\\:hidden {
+            display: none !important;
+          }
+
+          .table-wrapper {
+            overflow: visible !important;
+          }
+
+          table {
+            width: 100% !important;
+            table-layout: fixed;
+            border-collapse: collapse;
+            font-size: 10px;
+          }
+
+          th, td {
+            border: 1px solid #999 !important;
+            padding: 2px !important;
+            word-wrap: break-word;
+            text-align: center;
+          }
+
+          thead {
+            background-color: #e0f2f1 !important;
+            -webkit-print-color-adjust: exact;
+          }
+
+          tr {
+            page-break-inside: avoid;
+          }
+        }
+      `}</style>
+
+      <div className="flex justify-between items-center mb-6 print:hidden">
+        <h1 className="text-2xl font-bold text-green-700">Camper First-Choice Activity Grid</h1>
+        <button
+          onClick={() => window.print()}
+          className="py-2 px-4 bg-blue-600 text-white text-sm rounded shadow hover:bg-blue-700"
+        >
+          Print Page
+        </button>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-wrap gap-4 justify-start mb-10 print:hidden">
+        <select value={year} onChange={e => setYear(e.target.value)} className="border border-gray-300 rounded px-3 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
           {yearOptions.map(y => <option key={y} value={y}>{y}</option>)}
         </select>
-        <select value={session} onChange={e => setSession(e.target.value)} className="border border-gray-300 rounded px-4 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
+        <select value={session} onChange={e => setSession(e.target.value)} className="border border-gray-300 rounded px-3 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
           {sessionOptions.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
-        <select value={program} onChange={e => setProgram(e.target.value)} className="border border-gray-300 rounded px-4 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
+        <select value={program} onChange={e => setProgram(e.target.value)} className="border border-gray-300 rounded px-3 py-2 bg-white shadow-sm focus:ring-green-300 focus:outline-none">
           {programs.map(p => <option key={p} value={p}>{p}</option>)}
         </select>
       </div>
@@ -77,19 +131,19 @@ const CamperChoiceSchedule: React.FC = () => {
         <p className="text-center text-gray-500 text-lg">Loading schedule...</p>
       ) : (
         Object.entries(campersByCabin).map(([cabin, camperList]) => (
-          <div key={cabin} className="mb-16">
-            <h2 className="text-2xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-4">
-              {cabin}
+          <div key={cabin} className="mb-12">
+            <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-1 mb-2">
+              Cabin: {cabin}
             </h2>
-            <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
-              <table className="min-w-full text-sm text-left border-collapse">
-                <thead className="bg-green-50 text-green-900">
+            <div className="table-wrapper overflow-x-auto rounded-lg border border-gray-200">
+              <table>
+                <thead>
                   <tr>
-                    <th className="px-4 py-3 border border-gray-300 font-semibold">First</th>
-                    <th className="px-4 py-3 border border-gray-300 font-semibold">Last</th>
+                    <th>First</th>
+                    <th>Last</th>
                     {days.map(day =>
                       hours.map(hour => (
-                        <th key={`${day}-${hour}`} className="px-4 py-3 border border-gray-300 font-semibold text-center">
+                        <th key={`${day}-${hour}`}>
                           {day} {hour}
                         </th>
                       ))
@@ -98,15 +152,12 @@ const CamperChoiceSchedule: React.FC = () => {
                 </thead>
                 <tbody>
                   {camperList.map((camper, index) => (
-                    <tr key={`${camper.first}-${camper.last}`} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="px-4 py-2 border border-gray-300">{camper.first}</td>
-                      <td className="px-4 py-2 border border-gray-300">{camper.last}</td>
+                    <tr key={`${camper.first}-${camper.last}`}>
+                      <td>{camper.first}</td>
+                      <td>{camper.last}</td>
                       {days.map(day =>
                         hours.map(hour => (
-                          <td
-                            key={`${camper.first}-${day}-${hour}`}
-                            className="px-3 py-2 border border-gray-300 text-center text-gray-700"
-                          >
+                          <td key={`${camper.first}-${day}-${hour}`}>
                             {camper.choices?.[day]?.[hour]?.first || ''}
                           </td>
                         ))
