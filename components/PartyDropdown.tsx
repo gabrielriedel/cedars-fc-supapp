@@ -16,7 +16,7 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
         const fetchGuests = async () => {
             setLoading(true);
             try {
-                const response = await fetch('/api/party');
+                const response = await fetch('/api/familyCamp/party');
                 if (!response.ok) throw new Error('Failed to fetch guests');
                 
                 const data: Guest[] = await response.json();

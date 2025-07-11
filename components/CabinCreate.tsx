@@ -43,7 +43,7 @@ const CabinCreate: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/createCabin', {
+      const response = await fetch('/api/familyCamp/createCabin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(combinedData),

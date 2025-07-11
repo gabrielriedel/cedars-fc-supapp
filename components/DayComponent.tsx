@@ -66,7 +66,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
         }
 
         try {
-            const response = await fetch('/api/registerActivities', {
+            const response = await fetch('/api/familyCamp/registerActivities', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -109,7 +109,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
             return;
         }
         try {
-            const response = await fetch('/api/submitComment', {
+            const response = await fetch('/api/familyCamp/submitComment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

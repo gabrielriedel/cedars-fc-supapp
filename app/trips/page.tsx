@@ -23,7 +23,7 @@ const Page: React.FC = () => {
         async function fetchTrips() {
             setLoading(true);
             try {
-                const response = await fetch('/api/trips');
+                const response = await fetch('/api/familyCamp/trips');
                 if (!response.ok) throw new Error('Failed to fetch trips');
                 const data = await response.json();
                 setTrips(data);
@@ -54,7 +54,7 @@ const Page: React.FC = () => {
         const secondTrip = trips.find(trip => trip.id === secondChoice);
 
         try {
-            const response = await fetch('/api/registerTrip', {
+            const response = await fetch('/api/familyCamp/registerTrip', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

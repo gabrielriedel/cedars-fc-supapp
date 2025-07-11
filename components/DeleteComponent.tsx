@@ -16,7 +16,7 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
         async function fetchGuests() {
             setLoading(true);
             try {
-                const response = await fetch('/api/party');
+                const response = await fetch('/api/familyCamp/party');
                 if (!response.ok) throw new Error('Failed to fetch guests');
                 
                 const data = await response.json() as Guest[];
@@ -34,7 +34,7 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     const handleDelete = async (guestId: number) => {
         if (!confirm("Are you sure you want to delete this guest?")) return;
         try {
-            const response = await fetch(`/api/removeGuest?id=${guestId}`, { method: 'DELETE' });
+            const response = await fetch(`/api/familyCamp/removeGuest?id=${guestId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Failed to delete guest');
 
             setGuests(currentGuests => currentGuests.filter(guest => guest.id !== guestId));

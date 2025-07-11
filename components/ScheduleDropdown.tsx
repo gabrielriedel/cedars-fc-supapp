@@ -21,7 +21,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
         const fetchGuests = async () => {
             setLoading(true);
             try {
-                const response = await fetch('/api/party');
+                const response = await fetch('/api/familyCamp/party');
                 if (!response.ok) throw new Error('Failed to fetch guests');
                 
                 const data: Guest[] = await response.json();
@@ -51,7 +51,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
         setTitleVisible(true);
 
         try {
-            const response = await fetch('/api/guestSchedules', {
+            const response = await fetch('/api/familyCamp/guestSchedules', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

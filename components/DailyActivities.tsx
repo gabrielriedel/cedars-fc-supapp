@@ -38,7 +38,7 @@ const DailyActivities: React.FC = () => {
         setTitleVisible(true);
 
         try {
-            const response = await fetch('/api/activitiesView', {
+            const response = await fetch('/api/familyCamp/activitiesView', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -32,7 +32,7 @@ const SubmitUser: React.FC = () => {
 
 
         try {
-            const response = await fetch('/api/registerGuest', {
+            const response = await fetch('/api/familyCamp/registerGuest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

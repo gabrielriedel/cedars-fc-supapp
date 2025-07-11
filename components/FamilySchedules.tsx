@@ -44,7 +44,7 @@ const AllSchedules: React.FC = () => {
         setTitleVisible(true);
 
         try {
-            const response = await fetch('/api/familySchedule', {
+            const response = await fetch('/api/familyCamp/familySchedule', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

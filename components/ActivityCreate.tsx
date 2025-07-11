@@ -33,7 +33,7 @@ const ActivityCreate: React.FC = () => {
         }
 
         try {
-            const response = await fetch('/api/createActivity', {
+            const response = await fetch('/api/familyCamp/createActivity', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
