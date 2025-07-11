@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const { data: activities, error: activitiesError } = await supabase
-            .from('activities')
+            .from('family_activities')
             .select('id, hour, activity_name, capacity, location')
             .eq('day', body.day)
             .order('hour', { ascending: true });

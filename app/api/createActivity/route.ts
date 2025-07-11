@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { data, error } = await supabase
-        .from('activities')
+        .from('family_activities')
         .insert([
             { activity_name: activityName, capacity, spaces_left: capacity, hour, day, description, location, age_limit: ageLimit, attire: attire }
         ]);

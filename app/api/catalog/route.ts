@@ -57,7 +57,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 async function fetchActivitiesForDayAndHour(day: string, hour: string): Promise<Activity[]> {
     const supabase = createClient();
     const { data, error } = await supabase
-        .from('activities')
+        .from('family_activities')
         .select('id, activity_name, spaces_left, description, age_limit')
         .eq('day', day)
         .eq('hour', hour)
@@ -80,7 +80,7 @@ async function fetchActivitiesForDayAndHour(day: string, hour: string): Promise<
 //     const supabase = createClient();
 //     const body = await req.json();
 //     const { data, error } = await supabase
-//         .from('activities')
+//         .from('family_activities')
 //         .select('*')
 //         .eq('day', body.day)
 //         .eq('hour', body.hour);
