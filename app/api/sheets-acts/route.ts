@@ -42,7 +42,7 @@ type Roster = {
 
 async function getTuesdayActivitiesAndRosters(): Promise<{ activities: Activity[], rosters: Roster[] }> {
   const { data: activitiesData, error: activitiesError } = await supabase
-    .from('activities')
+    .from('family_activities')
     .select('*');
   
   if (activitiesError) {

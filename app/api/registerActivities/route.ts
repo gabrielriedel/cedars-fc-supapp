@@ -36,7 +36,7 @@ export async function PATCH(req: NextRequest) {
 
     try {
         const { data: acts, error: actsError } = await supabase
-            .from('activities')
+            .from('family_activities')
             .select('spaces_left, age_limit, location, attire')
             .eq('day', body.day)
             .eq('hour', body.hour)
