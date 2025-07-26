@@ -51,7 +51,7 @@ async function getTuesdayActivitiesAndRosters(): Promise<{ activities: Activity[
   }
 
   const { data: rostersData, error: rostersError } = await supabase
-    .from('rosters')
+    .from('family_activities_roster')
     .select('*')
     .eq('day', 'Thursday');
 

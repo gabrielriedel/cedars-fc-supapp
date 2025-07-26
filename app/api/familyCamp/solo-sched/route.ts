@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     try {
         console.log("HERE")
         const { data, error } = await supabase
-            .from('rosters')
+            .from('family_activities_roster')
             .select('guest_id, first_name, last_name, hour, activity_name, location, attire')
             .eq('day', body.day)
             .eq('guest_id', body.guest_id)

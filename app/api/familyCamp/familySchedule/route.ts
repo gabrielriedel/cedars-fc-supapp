@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const { data, error } = await supabase
-            .from('rosters')
+            .from('family_activities_roster')
             .select('guest_id, first_name, last_name, hour, activity_name, location, attire, family_code')
             .eq('day', body.day)
             .order('guest_id', { ascending: true })

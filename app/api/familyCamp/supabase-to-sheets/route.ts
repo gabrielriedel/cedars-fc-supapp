@@ -32,7 +32,7 @@ type Roster = {
 
 async function getTuesdayRosters(): Promise<Roster[]> {
     const { data, error } = await supabase
-      .from('rosters')
+      .from('family_activities_roster')
       .select('*')
       .eq('day', 'Thursday')
       .order('family_code', { ascending: true }) // Order by family_code

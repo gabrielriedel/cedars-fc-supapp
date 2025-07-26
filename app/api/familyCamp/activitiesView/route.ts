@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         }
 
         const { data: rosters, error: rostersError } = await supabase
-            .from('rosters')
+            .from('family_activities_roster')
             .select('activity_id, first_name, last_name, grade')
             .eq('day', body.day);
 

@@ -64,7 +64,7 @@ export async function PATCH(req: NextRequest) {
         
 
         const { data: rosters, error: rostersError } = await supabase
-            .from('rosters')
+            .from('family_activities_roster')
             .select('activity_id')
             .eq('day', body.day)
             .eq('hour', body.hour)
@@ -82,7 +82,7 @@ export async function PATCH(req: NextRequest) {
         }
 
         const { data: insertData, error: insertError } = await supabase
-            .from('rosters')
+            .from('family_activities_roster')
             .insert([{ first_name: body.firstName, last_name: body.lastName, 
                        family_code: user?.id, activity_name: body.activityName, 
                        activity_id: body.activityId, day: body.day, hour: body.hour,
@@ -101,7 +101,7 @@ export async function PATCH(req: NextRequest) {
             console.log(body.day)
             console.log(body.hour)
             const { error: deleteError } = await supabase
-                .from('rosters')
+                .from('family_activities_roster')
                 .delete()
                 .match({ guest_id: body.guest_id, activity_id: rosters[0].activity_id, day: body.day, hour: body.hour });
             if (deleteError) {
