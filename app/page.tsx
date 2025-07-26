@@ -7,7 +7,10 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col items-center bg-white text-green-800">
       <nav className="w-full bg-green-500 text-white">
         <div className="max-w-4xl mx-auto flex justify-between items-center py-4 px-6">
-          <h1 className="text-lg font-bold">CedarS CampS</h1>
+          <div className="flex items-center gap-2">
+            <Image src={logo} alt="Cedars Family Camp Logo" width={48} height={48} />
+            <h1 className="text-lg font-bold">CedarS CampS</h1>
+          </div>
           <LoginButton />
         </div>
       </nav>

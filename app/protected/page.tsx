@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Link from 'next/link'
 import AuthButton from "@/components/AuthButton";
+import Image from 'next/image';
+import logo from '@/assets/cedarslogo.png';
 
 const ProtectedPage = async () => {
   const supabase = createClient();
@@ -18,68 +20,83 @@ const ProtectedPage = async () => {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen bg-white text-green-800 w-full">
+      <div className="flex flex-col items-center min-h-screen text-green-800 w-full bg-gradient-to-br from-green-50 via-white to-green-100">
         <nav className="w-full bg-green-500 text-white shadow-md">
           <div className="flex justify-between items-center py-4 px-6 w-full">
-            <h1 className="text-lg font-bold">Cedars Family Camp Dashboard</h1>
+            <div className="flex items-center gap-2">
+              <Image src={logo} alt="Cedars Family Camp Logo" width={48} height={48} />
+              <h1 className="text-lg font-bold">Cedars Family Camp Dashboard</h1>
+            </div>
             <AuthButton />
           </div>
         </nav>
-        <div className="flex-grow flex flex-col items-center justify-start pt-10 gap-6 px-6 w-full">
-          <section className="text-center mb-10">
+        <div className="flex-grow flex flex-col items-center justify-start pt-10 gap-6 px-4 sm:px-6 lg:px-8 w-full">
+          <section className="text-center mb-4">
             <h2 className="text-2xl font-bold mb-4">Welcome to Your Dashboard!</h2>
           </section>
-          <section className="flex flex-col items-center gap-4 w-full max-w-3xl px-4">
-            <p className="max-w-3xl text-lg font-bold mb-4">
-              Step 1: Add party members to your account.
-            </p>
-            <Link
-              href="/register"
-              className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-6 w-full md:w-auto">
-              Add Party Members
-            </Link>
-            <p className="max-w-3xl text-lg font-bold mb-4">
-              Step 2: Sign-up for activities for each member of your party.
-            </p>
-            <Link
-              href="/activities"
-              className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-6 w-full md:w-auto">
-              Activity Sign-ups
-            </Link>
-            <p className="max-w-3xl text-lg font-bold mb-4">
-              Step 3: Fill out horse activity questionnaire if you have not already.
-            </p>
-            <a
-              href="https://form.jotform.com/242084860452153"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-6 w-full md:w-auto">
-              Family Camp Horse Activity Questionnaire
-            </a>
-            <p className="max-w-3xl text-lg font-bold mb-4">
-              Step 4: Sign-up for Wednesday Trip Day for each member of your party.
-            </p>
-            <Link
-              href="/trips"
-              className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-6 w-full md:w-auto">
-              Trip Sign-ups
-            </Link>
-            <p className="max-w-3xl text-lg font-bold mb-4">
-              Optional: View scheduled activities or edit your party list.
-            </p>
-            <div className="flex flex-col md:flex-row md:gap-4">
-              <Link
-                href="/schedule"
-                className="bg-yellow-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-4 md:mb-0 w-full md:w-auto">
-                View Activity Schedules
-              </Link>
-              <Link
-                href="/remove"
-                className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto">
-                View/Remove Party Members
-              </Link>
-            </div>
-          </section>
+          <div className="relative w-full max-w-4xl mx-auto my-12 px-0">
+            <section className="relative flex flex-col items-center space-y-6 max-w-3xl mx-auto px-0">
+              <div className="bg-white rounded-lg shadow p-6 w-full">
+                <p className="max-w-3xl text-lg font-bold mb-4">
+                  Step 1: Add party members to your account.
+                </p>
+                <Link
+                  href="/register"
+                  className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto block text-center">
+                  Add Party Members
+                </Link>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 w-full">
+                <p className="max-w-3xl text-lg font-bold mb-4">
+                  Step 2: Sign-up for activities for each member of your party.
+                </p>
+                <Link
+                  href="/activities"
+                  className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto block text-center">
+                  Activity Sign-ups
+                </Link>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 w-full">
+                <p className="max-w-3xl text-lg font-bold mb-4">
+                  Step 3: Fill out horse activity questionnaire if you have not already.
+                </p>
+                <a
+                  href="https://form.jotform.com/242084860452153"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto block text-center">
+                  Family Camp Horse Activity Questionnaire
+                </a>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 w-full">
+                <p className="max-w-3xl text-lg font-bold mb-4">
+                  Step 4: Sign-up for Wednesday Trip Day for each member of your party.
+                </p>
+                <Link
+                  href="/trips"
+                  className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto block text-center">
+                  Trip Sign-ups
+                </Link>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 w-full">
+                <p className="max-w-3xl text-lg font-bold mb-4">
+                  Optional: View scheduled activities or edit your party list.
+                </p>
+                <div className="flex flex-col md:flex-row md:gap-4">
+                  <Link
+                    href="/schedule"
+                    className="bg-yellow-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mb-4 md:mb-0 w-full md:w-auto block text-center">
+                    View Activity Schedules
+                  </Link>
+                  <Link
+                    href="/remove"
+                    className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto block text-center">
+                    View/Remove Party Members
+                  </Link>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </>
