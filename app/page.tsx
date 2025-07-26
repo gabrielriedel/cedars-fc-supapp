@@ -18,11 +18,11 @@ export default async function Index() {
         <h2 className="text-3xl font-bold text-center">
           Welcome Home to Cedars!
         </h2>
-        <p className="text-xl">
-          Join us for a summer of adventure, memories, and JOY. Sign up or log in now to register for activities!
+        <p className="text-xl text-center">
+          Join us for a summer overflowing with Peace and Joy and POWER! From adventure to unforgettable memories, it all begins when you sign up or log in to register for activities.
         </p>
         <p className="text-lg">
-          IMPORTANT: Only one member of your party needs to make an account. A party would be the group that you would like to sign-up for activities.
+          IMPORTANT: Only ONE member of your party needs to make an account to sign-up for activities for the group.
         </p>
         <div className="flex gap-5">
         <a
