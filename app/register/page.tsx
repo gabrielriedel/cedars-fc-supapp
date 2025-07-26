@@ -2,68 +2,70 @@
 
 import SubmitUser from '@/components/SubmitUser';
 import Link from "next/link";
+import Image from 'next/image';
+import logo from '@/assets/cedarslogo.png';
 
 const Home: React.FC = () => {
     return (
-        <div className="flex min-h-screen bg-white">
-            {/* Left Column for Form */}
-            <div className="flex flex-col w-3/5 pl-20 pt-8">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 text-green-900 px-4 py-10">
+            {/* Top Navigation */}
+            <div className="max-w-6xl mx-auto mb-8 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                    <Image src={logo} alt="Cedars Logo" width={40} height={40} />
+                    <h1 className="text-xl font-semibold">Cedars Family Camp</h1>
+                </div>
                 <Link
                     href="/protected"
-                    className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center text-sm"
+                    className="text-sm font-medium text-green-800 hover:underline flex items-center"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+                        className="mr-2 h-4 w-4"
                     >
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
-                    Back to dashboard
+                    Back to Dashboard
                 </Link>
-                <div className="flex justify-center items-center mt-10 mb-8">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                        Add Party Member
-                    </h1>
-                </div>
-                <SubmitUser />
-                <Link 
-                href="/activities"
-                className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 mt-4"
-            >
-                Go to Activity Sign-ups --{'>'}
-            </Link>
             </div>
-            
-            {/* Right Column for Instructions */}
-            <div className="w-2/5 bg-green-100 p-8 text-green-800">
-                <h2 className="text-2xl font-bold mb-4">Instructions for Adding Party Members</h2>
-                <p className="text-lg leading-relaxed">
-                    Please follow the steps below to add a new party member to your party's registration:
-                </p>
-                <ul className="list-disc pl-4 mt-4">
-                    <li>Only add members that you plan on registering activities for.</li>
-                    <li>The person who logged in still needs to add themself as a party member.</li>
-                    <li>Enter the necessary details for each field, ensuring accuracy.</li>
-                    <li>Double-check the information for typos or errors.</li>
-                    <li>Submit the form once all fields are completed.</li>
-                    <li>If you encounter any issues, use the 'Back' button to return to the previous page and try again.</li>
-                </ul>
-                <p className="mt-4">
-                    Our system will automatically update your party list once the new member is successfully added. Thank you for updating your details!
-                </p>
+
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+                {/* Left Form Section */}
+                <div className="md:col-span-3 bg-white rounded-lg shadow-md p-8">
+                    <h2 className="text-2xl font-bold mb-6">Add Party Member</h2>
+                    <SubmitUser />
+                    <Link 
+                        href="/activities"
+                        className="inline-block bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow mt-6 transition-colors duration-200"
+                    >
+                        Go to Activity Sign-ups &rarr;
+                    </Link>
+                </div>
+
+                {/* Right Instruction Panel */}
+                <div className="md:col-span-2 bg-green-100 border border-green-200 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-4">Instructions</h3>
+                    <ul className="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+                        <li>Only add members you plan to register for activities.</li>
+                        <li>Be sure to add yourself to the party as well.</li>
+                        <li>Fill out each field accurately and double-check for typos.</li>
+                        <li>Click “Submit” once all information is complete.</li>
+                        <li>If needed, use the back button to return and edit entries.</li>
+                    </ul>
+                    <p className="text-sm mt-4">
+                        Your party list will automatically update after a member is added. Thanks for keeping your info current!
+                    </p>
+                </div>
             </div>
         </div>
     );
-    
-    
 };
 
 export default Home;

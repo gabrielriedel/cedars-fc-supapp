@@ -41,8 +41,8 @@ const PartyDropdown: React.FC<PartyDropdownProps> = ({ setSelectedGuest }) => {
     return (
         <div className="mt-10 w-full">
         <div className="flex justify-center">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                Register for activities!
+            <h1 className="text-2xl font-semibold text-green-900 border-b border-green-300 pb-2">
+                Activity Registration
             </h1>
         </div>
         <div className="flex justify-start">
