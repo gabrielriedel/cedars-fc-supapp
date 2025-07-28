@@ -35,7 +35,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
             try {
                 const responses = await Promise.all(
                     hours.map(hour =>
-                        fetch('/api/catalog', {
+                        fetch('/api/familyCamp/catalog', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ day, hour })

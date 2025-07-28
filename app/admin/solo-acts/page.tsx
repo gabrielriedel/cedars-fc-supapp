@@ -33,7 +33,7 @@ const AllSchedules: React.FC = () => {
     useEffect(() => {
         const fetchGuests = async () => {
             try {
-                const response = await fetch('/api/guests');
+                const response = await fetch('/api/familyCamp/guests');
                 if (!response.ok) throw new Error('Failed to fetch guests');
                 const data = await response.json();
                 setGuests(data);
@@ -62,7 +62,7 @@ const AllSchedules: React.FC = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/solo-sched', {
+            const response = await fetch('/api/familyCamp/solo-sched', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

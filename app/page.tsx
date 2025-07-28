@@ -37,7 +37,7 @@ export default async function Index() {
             Learn More
           </a>
           <a
-            href="https://docs.google.com/document/d/1wDAyyI5sXilXUd2Kj5srhBPbfSaAh-j9CE1B7doxDSc/edit?usp=sharing" // Replace with your desired URL
+            href="https://docs.google.com/document/d/1qfrNSjbw3rp7n3G6Uu1VkvJeVd8ELejbH38hymCQ1WY/edit?usp=sharing" // Replace with your desired URL
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-lg shadow border border-green-600 transition-colors"

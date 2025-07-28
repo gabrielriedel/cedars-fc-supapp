@@ -10,7 +10,7 @@ const ExportData = () => {
     setMessage('');
 
     try {
-      const response = await fetch('/api/supabase-to-sheets', {
+      const response = await fetch('/api/familyCamp/supabase-to-sheets', {
         method: 'POST',
       });
 

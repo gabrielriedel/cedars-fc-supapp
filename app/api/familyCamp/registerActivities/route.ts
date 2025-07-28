@@ -88,12 +88,16 @@ export async function PATCH(req: NextRequest) {
                        activity_id: body.activityId, day: body.day, hour: body.hour,
                     guest_id: body.guest_id, location:acts[0].location, attire:acts[0].attire, grade:body.grade }]);
 
-        if (insertError) throw new Error("Failed to register for activity.");
+        const activityIdNum = Number(body.activityId);
+        console.log('Calling decrement_space with:', activityIdNum, typeof activityIdNum);
 
         const { error: decrementError } = await supabase
-            .rpc('decrement_space', { activity_id_param: body.activityId });
+        .rpc('decrement_space', { activity_id_param: activityIdNum });
 
-        if (decrementError) throw new Error("Failed to update spaces left.");
+        if (decrementError) {
+        console.error('decrement_space error:', decrementError); // ← THIS IS KEY
+        throw new Error("Failed to update spaces left.");
+}
 
         if (rosters.length > 0){
             console.log(rosters[0].activity_id)
@@ -107,9 +111,18 @@ export async function PATCH(req: NextRequest) {
             if (deleteError) {
                 throw new Error(deleteError.message);
             }
+            
+            const prevActivityId = Number(rosters[0].activity_id);
+            console.log('Calling increment_space with:', prevActivityId, typeof prevActivityId);
+
             const { error: incrementError } = await supabase
-            .rpc('increment_space', { activity_id_param: rosters[0].activity_id });
-            if (incrementError) throw new Error("Failed to increment spaces left.");
+            .rpc('increment_space', { activity_id_param: prevActivityId });
+
+            if (incrementError) {
+            console.error('increment_space error:', incrementError);
+            throw new Error("Failed to increment spaces left.");
+            }
+
 
         }
 

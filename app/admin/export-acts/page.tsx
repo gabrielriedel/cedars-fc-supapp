@@ -10,7 +10,7 @@ const ExportData = () => {
     setMessage('');
 
     try {
-      const response = await fetch('/api/sheets-acts', {
+      const response = await fetch('/api/familyCamp/sheets-acts', {
         method: 'POST',
       });
 
