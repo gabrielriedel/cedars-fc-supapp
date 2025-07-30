@@ -22,12 +22,16 @@ const ProtectedPage = async () => {
     <>
       <div className="flex flex-col items-center min-h-screen text-green-800 w-full bg-gradient-to-br from-green-50 via-white to-green-100">
         <nav className="w-full bg-green-500 text-white shadow-md">
-          <div className="flex justify-between items-center py-4 px-6 w-full">
-            <div className="flex items-center gap-2">
-              <Image src={logo} alt="Cedars Family Camp Logo" width={48} height={48} />
-              <h1 className="text-lg font-bold">Cedars Family Camp Dashboard</h1>
+          <div className="flex flex-wrap justify-between items-center py-4 px-4 sm:px-6 w-full">
+            <div className="flex items-center gap-2 mb-2 sm:mb-0">
+              <Image src={logo} alt="Cedars Family Camp Logo" width={40} height={40} className="flex-shrink-0" />
+              <h1 className="text-base sm:text-lg font-bold text-center sm:text-left">
+                Cedars Family Camp Dashboard
+              </h1>
             </div>
-            <AuthButton />
+            <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+              <AuthButton />
+            </div>
           </div>
         </nav>
         <div className="flex-grow flex flex-col items-center justify-start pt-10 gap-6 px-4 sm:px-6 lg:px-8 w-full">

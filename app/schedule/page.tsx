@@ -13,7 +13,7 @@ const Page: React.FC = () => {
     };
 
     return (
-      <div className="flex flex-col items-center w-full min-h-screen bg-gradient-to-b from-green-50 to-white text-green-800 px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex flex-col items-center w-full min-h-screen bg-gradient-to-b from-green-50 to-white text-green-800 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         
         {/* Back Button */}
         <Link
@@ -34,7 +34,7 @@ const Page: React.FC = () => {
         </Link>
 
         {/* Schedule Dropdown */}
-        <div className="w-full max-w-3xl bg-white rounded-xl shadow p-6">
+        <div className="w-full max-w-full sm:max-w-2xl bg-white rounded-xl shadow p-4 sm:p-6 overflow-hidden">
           <ScheduleDropdown setSelectedGuest={setSelectedGuest} setSelectedDay={setSelectedDay} />
         </div>
       </div>
