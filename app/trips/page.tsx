@@ -118,7 +118,7 @@ const Page: React.FC = () => {
                 </Link>
                 <PartyTwo setSelectedGuest={setSelectedGuest} />
                 <a 
-                    href="https://docs.google.com/document/d/1wDAyyI5sXilXUd2Kj5srhBPbfSaAh-j9CE1B7doxDSc/edit#heading=h.h5z4n4udcq2g" 
+                    href="https://docs.google.com/document/d/1qfrNSjbw3rp7n3G6Uu1VkvJeVd8ELejbH38hymCQ1WY/edit?usp=sharing" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full md:w-auto my-4"
@@ -139,7 +139,7 @@ const Page: React.FC = () => {
                     </option>
                     {trips.map(trip => (
                         <option key={trip.id} value={trip.id}>
-                            {trip.name} - Age limit: {trip.age_limit}
+                            {trip.name} - Age Minimum: {trip.age_limit}
                         </option>
                     ))}
                 </select>

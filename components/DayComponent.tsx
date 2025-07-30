@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './Modal'; // Ensure this path is correct
+import Modal from './Modal';
 import './DayComponent.css';
 import { Guest } from '@/components/Guest';
 
@@ -27,6 +27,13 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
     const [modalMessage, setModalMessage] = useState('');
     const [hoveredActivity, setHoveredActivity] = useState<number | null>(null);
     const [comment, setComment] = useState<string>('');
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+    const [pendingRegistration, setPendingRegistration] = useState<{
+        activityId: number;
+        activityName: string;
+        hour: number;
+        day: string;
+    } | null>(null);
 
     useEffect(() => {
         async function fetchActivities() {
@@ -43,7 +50,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                         .then(res => res.ok ? res.json() : Promise.reject('Failed to load'))
                         .catch(err => {
                             console.error('Error fetching activities for hour', hour, ':', err);
-                            return []; // Return an empty array on error
+                            return [];
                         })
                     )
                 );
@@ -86,14 +93,14 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 throw new Error(errMsg);
             }
             setModalMessage("Registration successful!");
-            setModalOpen(true);
-        } catch (err: unknown) { // Specifying 'unknown' is optional as it's the default type for errors now
+        } catch (err: unknown) {
             console.error('Failed to register activity:', err);
             if (err instanceof Error) {
                 setModalMessage(err.message);
             } else {
                 setModalMessage("An unexpected error occurred");
             }
+        } finally {
             setModalOpen(true);
         }
     };
@@ -126,7 +133,6 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 throw new Error(errMsg);
             }
             setModalMessage("Comment submitted successfully!");
-            setModalOpen(true);
         } catch (err: unknown) {
             console.error('Failed to submit comment:', err);
             if (err instanceof Error) {
@@ -134,6 +140,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
             } else {
                 setModalMessage("An unexpected error occurred");
             }
+        } finally {
             setModalOpen(true);
         }
     };
@@ -142,15 +149,19 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
 
     return (
         <div className="w-full max-w-md px-8">
-            <h3 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mb-4 mt-4 text-center" onClick={toggleSelectedDay}>
+            <h3
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mb-4 mt-4 text-center"
+                onClick={toggleSelectedDay}
+            >
                 {day}
             </h3>
+
             {isSelectedDay && (
                 <>
                     {hours.map((hour, index) => (
                         <div key={hour} className="mt-3 pl-4">
-                            <button 
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-red-800 focus:outline-none focus:shadow-outline" 
+                            <button
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-red-800 focus:outline-none focus:shadow-outline"
                                 onClick={() => setSelectedHour(selectedHour === hour ? null : hour)}
                                 aria-expanded={selectedHour === hour}
                             >
@@ -159,17 +170,25 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                             {selectedHour === hour && (
                                 <ul className="pl-4">
                                     {activities[index] && activities[index].length > 0 ? activities[index].map(activity => (
-                                        <li 
-                                            key={activity.id} 
+                                        <li
+                                            key={activity.id}
                                             className="mt-2 relative group"
                                             onMouseEnter={() => setHoveredActivity(activity.id)}
                                             onMouseLeave={() => setHoveredActivity(null)}
                                         >
-                                            <button 
-                                                className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline" 
-                                                onClick={() => handleActivityRegistration(activity.id, activity.activity_name, hour, day)}
+                                            <button
+                                                className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline"
+                                                onClick={() => {
+                                                    setPendingRegistration({
+                                                        activityId: activity.id,
+                                                        activityName: activity.activity_name,
+                                                        hour,
+                                                        day
+                                                    });
+                                                    setConfirmModalOpen(true);
+                                                }}
                                             >
-                                                {activity.activity_name} -- Spaces left: {activity.spaces_left} -- Minimum age: {activity.age_limit} 
+                                                {activity.activity_name} -- Spaces left: {activity.spaces_left} -- Minimum age: {activity.age_limit}
                                             </button>
                                             {hoveredActivity === activity.id && (
                                                 <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-green-200 text-black p-2 rounded shadow-lg transition-opacity duration-300 opacity-100">
@@ -182,17 +201,18 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                             )}
                         </div>
                     ))}
+
                     <div className="mt-3 flex flex-col items-start">
                         <label className="text-gray-700 mb-2 font-bold underline">Activities that were full that you wanted to do:</label>
-                        <input 
+                        <input
                             type="text"
                             value={comment}
                             onChange={handleCommentChange}
                             className="comment-input border rounded p-2 mr-2 w-full"
                             placeholder="e.g. Archery, Cable Ski, and Tie Dye"
                         />
-                        <button 
-                            className="submit-comment bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mt-2" 
+                        <button
+                            className="submit-comment bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-blue-800 focus:outline-none focus:shadow-outline mt-2"
                             onClick={handleCommentSubmit}
                         >
                             Submit
@@ -200,9 +220,41 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                     </div>
                 </>
             )}
+
+            {/* Success or error modal */}
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
                 <p>{modalMessage}</p>
             </Modal>
+
+            {/* Confirmation modal */}
+            {confirmModalOpen && pendingRegistration && (
+                <Modal isOpen={true} onClose={() => setConfirmModalOpen(false)}>
+                    <p>Do you want to register for <strong>{pendingRegistration.activityName}</strong>?</p>
+                    <div className="flex justify-end mt-4 space-x-4">
+                        <button
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                            onClick={() => setConfirmModalOpen(false)}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={() => {
+                                handleActivityRegistration(
+                                    pendingRegistration.activityId,
+                                    pendingRegistration.activityName,
+                                    pendingRegistration.hour,
+                                    pendingRegistration.day
+                                );
+                                setConfirmModalOpen(false);
+                                setPendingRegistration(null);
+                            }}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };
