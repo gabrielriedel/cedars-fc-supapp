@@ -33,7 +33,12 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
         activityName: string;
         hour: number;
         day: string;
+        description?: string;
     } | null>(null);
+
+    const isTouchDevice = typeof window !== 'undefined' && (
+        'ontouchstart' in window || navigator.maxTouchPoints > 0
+    );
 
     useEffect(() => {
         async function fetchActivities() {
@@ -92,6 +97,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 const errMsg = await response.text();
                 throw new Error(errMsg);
             }
+
             setModalMessage("Registration successful!");
         } catch (err: unknown) {
             console.error('Failed to register activity:', err);
@@ -132,6 +138,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 const errMsg = await response.text();
                 throw new Error(errMsg);
             }
+
             setModalMessage("Comment submitted successfully!");
         } catch (err: unknown) {
             console.error('Failed to submit comment:', err);
@@ -167,14 +174,15 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                             >
                                 Hour {hour}
                             </button>
+
                             {selectedHour === hour && (
                                 <ul className="pl-4">
                                     {activities[index] && activities[index].length > 0 ? activities[index].map(activity => (
                                         <li
                                             key={activity.id}
                                             className="mt-2 relative group"
-                                            onMouseEnter={() => setHoveredActivity(activity.id)}
-                                            onMouseLeave={() => setHoveredActivity(null)}
+                                            onMouseEnter={() => !isTouchDevice && setHoveredActivity(activity.id)}
+                                            onMouseLeave={() => !isTouchDevice && setHoveredActivity(null)}
                                         >
                                             <button
                                                 className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline"
@@ -183,15 +191,18 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                                                         activityId: activity.id,
                                                         activityName: activity.activity_name,
                                                         hour,
-                                                        day
+                                                        day,
+                                                        description: activity.description
                                                     });
                                                     setConfirmModalOpen(true);
                                                 }}
                                             >
                                                 {activity.activity_name} -- Spaces left: {activity.spaces_left} -- Minimum age: {activity.age_limit}
                                             </button>
-                                            {hoveredActivity === activity.id && (
-                                                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-green-200 text-black p-2 rounded shadow-lg transition-opacity duration-300 opacity-100">
+
+                                            {/* Desktop tooltip */}
+                                            {!isTouchDevice && hoveredActivity === activity.id && (
+                                                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-green-200 text-black p-2 rounded shadow-lg transition-opacity duration-300 opacity-100 z-50">
                                                     <span className="text-sm">{`Description: ${activity.description}`}</span>
                                                 </div>
                                             )}
@@ -221,7 +232,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 </>
             )}
 
-            {/* Success or error modal */}
+            {/* Result modal */}
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
                 <p>{modalMessage}</p>
             </Modal>
@@ -229,29 +240,36 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
             {/* Confirmation modal */}
             {confirmModalOpen && pendingRegistration && (
                 <Modal isOpen={true} onClose={() => setConfirmModalOpen(false)}>
-                    <p>Do you want to register for <strong>{pendingRegistration.activityName}</strong>?</p>
-                    <div className="flex justify-end mt-4 space-x-4">
-                        <button
-                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                            onClick={() => setConfirmModalOpen(false)}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => {
-                                handleActivityRegistration(
-                                    pendingRegistration.activityId,
-                                    pendingRegistration.activityName,
-                                    pendingRegistration.hour,
-                                    pendingRegistration.day
-                                );
-                                setConfirmModalOpen(false);
-                                setPendingRegistration(null);
-                            }}
-                        >
-                            OK
-                        </button>
+                    <div className="space-y-4">
+                        <p>Do you want to register for <strong>{pendingRegistration.activityName}</strong>?</p>
+                        {isTouchDevice && pendingRegistration.description && (
+                            <p className="text-sm bg-green-100 text-gray-800 p-2 rounded">
+                                Description: {pendingRegistration.description}
+                            </p>
+                        )}
+                        <div className="flex justify-end space-x-4 pt-2">
+                            <button
+                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                onClick={() => setConfirmModalOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => {
+                                    handleActivityRegistration(
+                                        pendingRegistration.activityId,
+                                        pendingRegistration.activityName,
+                                        pendingRegistration.hour,
+                                        pendingRegistration.day
+                                    );
+                                    setConfirmModalOpen(false);
+                                    setPendingRegistration(null);
+                                }}
+                            >
+                                OK
+                            </button>
+                        </div>
                     </div>
                 </Modal>
             )}
