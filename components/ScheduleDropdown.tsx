@@ -73,9 +73,9 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
     return (
         <div className="w-full">
             <div className="mt-10 w-full">
-                <div className="flex justify-center">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold py-2 px-8 bg-green-500 text-white rounded-full">
-                        View Family Activity Schedules!
+                <div className="flex justify-center mb-6">
+                    <h1 className="text-center text-2xl md:text-3xl lg:text-4xl font-extrabold text-green-800 tracking-wide">
+                        Family Activity Schedules
                     </h1>
                 </div>
                 <div className="flex justify-start mt-4">
@@ -83,7 +83,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                         <label htmlFor="daySelect" className="block text-black font-medium py-2">
                             Choose a day of the week:
                         </label>
-                        <select id="daySelect" name="days" onChange={handleDaySelection} className="mt-1 block w-full pl-3 pr-10 py-2 text-white bg-green-500 hover:bg-green-700 focus:bg-green-600 border-none focus:outline-none focus:ring-2 focus:ring-green-700 rounded-md">
+                        <select id="daySelect" name="days" onChange={handleDaySelection} className="mt-1 block w-full pl-3 pr-10 py-2 bg-white border border-green-300 text-green-900 focus:ring-2 focus:ring-green-500 rounded-lg shadow-sm">
                             <option value="">Select a day</option>
                             {['Monday', 'Tuesday', 'Wednesday', 'Thursday'].map((day, index) => (
                                 <option key={index} value={day} className="bg-white text-black">
@@ -94,7 +94,7 @@ const ScheduleDropdown: React.FC<ScheduleDropdownProps> = ({ setSelectedGuest, s
                     </div>
                 </div>
                 <div className="flex justify-center mt-6">
-                    <button onClick={handleSubmit} className="py-2 px-8 bg-green-500 text-white hover:bg-green-700 focus:bg-green-600 rounded-full">
+                    <button onClick={handleSubmit} className="py-2 px-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow transition">
                         Submit
                     </button>
                 </div>
