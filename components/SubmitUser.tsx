@@ -6,12 +6,11 @@ import Link from "next/link";
 interface UserFormData {
     firstName: string;
     lastName: string;
-    cabin: string;
     grade: string;
 }
 
 const SubmitUser: React.FC = () => {
-    const [formData, setFormData] = useState<UserFormData>({ firstName: '', lastName: '', cabin: '', grade: '' });
+    const [formData, setFormData] = useState<UserFormData>({ firstName: '', lastName: '', grade: '' });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -25,7 +24,7 @@ const SubmitUser: React.FC = () => {
         event.preventDefault();  // Prevent the default form submission behavior
 
         // Validate the input
-        if (!formData.firstName || !formData.lastName || !formData.cabin || !formData.grade) {
+        if (!formData.firstName || !formData.lastName || !formData.grade) {
             alert('All fields are required!');
             return;
         }
@@ -38,7 +37,6 @@ const SubmitUser: React.FC = () => {
                 body: JSON.stringify({
                     firstName: formData.firstName,
                     lastName: formData.lastName,
-                    cabin: formData.cabin,
                     grade: formData.grade
                 })
             });
@@ -50,7 +48,7 @@ const SubmitUser: React.FC = () => {
             const result = await response.json();
             alert('Guest added successfully!');
             console.log(result);  // Log or handle response data as needed
-            setFormData({ firstName: '', lastName: '', cabin: '', grade: '' });  // Clear the form
+            setFormData({ firstName: '', lastName: '', grade: '' });  // Clear the form
         } catch (error) {
             alert(error instanceof Error ? error.message : 'Failed to add guest');
         }
@@ -81,17 +79,6 @@ const SubmitUser: React.FC = () => {
                         value={formData.lastName}
                         onChange={handleChange}
                         required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="text-md font-medium block mb-2" htmlFor="cabin">Cabin:</label>
-                    <input
-                        className="rounded-md px-4 py-2 bg-gray-50 border border-gray-300 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                        type="text"
-                        id="cabin"
-                        name="cabin"
-                        value={formData.cabin}
-                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-4">
