@@ -100,7 +100,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 throw new Error(errMsg);
             }
 
-            setSelectedActivityIds(prev => new Set(prev).add(activityId)); // Add to selected list
+            setSelectedActivityIds(prev => new Set(prev).add(activityId));
             setModalMessage("Registration successful!");
         } catch (err: unknown) {
             console.error('Failed to register activity:', err);
@@ -190,7 +190,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                                             <button
                                                 className={`activity-button text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 focus:outline-none focus:shadow-outline
                                                     ${selectedActivityIds.has(activity.id)
-                                                        ? 'bg-blue-800 ring-2 ring-blue-300'
+                                                        ? 'bg-blue-800 ring-2 ring-blue-400'
                                                         : 'bg-green-500 hover:bg-green-700 active:bg-green-800'}`}
                                                 onClick={() => {
                                                     setPendingRegistration({
@@ -206,7 +206,6 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                                                 {activity.activity_name} -- Spaces left: {activity.spaces_left} -- Minimum age: {activity.age_limit}
                                             </button>
 
-                                            {/* Desktop tooltip */}
                                             {!isTouchDevice && hoveredActivity === activity.id && (
                                                 <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-green-200 text-black p-2 rounded shadow-lg transition-opacity duration-300 opacity-100 z-50">
                                                     <span className="text-sm">{`Description: ${activity.description}`}</span>
@@ -238,12 +237,10 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 </>
             )}
 
-            {/* Result modal */}
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
                 <p>{modalMessage}</p>
             </Modal>
 
-            {/* Confirmation modal */}
             {confirmModalOpen && pendingRegistration && (
                 <Modal isOpen={true} onClose={() => setConfirmModalOpen(false)}>
                     <div className="space-y-4">
