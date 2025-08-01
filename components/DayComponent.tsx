@@ -19,7 +19,13 @@ interface DayComponentProps {
     toggleSelectedDay: () => void;
 }
 
-const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, isSelectedDay, toggleSelectedDay }) => {
+const DayComponent: React.FC<DayComponentProps> = ({
+    day,
+    hours,
+    selectedGuest,
+    isSelectedDay,
+    toggleSelectedDay
+}) => {
     const [activities, setActivities] = useState<Activity[][]>([]);
     const [isLoading, setLoading] = useState(true);
     const [selectedHour, setSelectedHour] = useState<number | null>(null);
@@ -28,7 +34,14 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
     const [hoveredActivity, setHoveredActivity] = useState<number | null>(null);
     const [comment, setComment] = useState<string>('');
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-    const [selectedActivityIds, setSelectedActivityIds] = useState<Set<number>>(new Set());
+
+    const [selectedActivityIds, setSelectedActivityIds] = useState<Set<number>>(() => {
+        if (typeof window !== 'undefined') {
+            const stored = localStorage.getItem('selectedActivityIds');
+            return stored ? new Set(JSON.parse(stored)) : new Set();
+        }
+        return new Set();
+    });
 
     const [pendingRegistration, setPendingRegistration] = useState<{
         activityId: number;
@@ -100,7 +113,12 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 throw new Error(errMsg);
             }
 
-            setSelectedActivityIds(prev => new Set(prev).add(activityId));
+            setSelectedActivityIds(prev => {
+                const updated = new Set(prev).add(activityId);
+                localStorage.setItem('selectedActivityIds', JSON.stringify(Array.from(updated)));
+                return updated;
+            });
+
             setModalMessage("Registration successful!");
         } catch (err: unknown) {
             console.error('Failed to register activity:', err);
@@ -124,6 +142,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
             setModalOpen(true);
             return;
         }
+
         try {
             const response = await fetch('/api/familyCamp/submitComment', {
                 method: 'POST',
