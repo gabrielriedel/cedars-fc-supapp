@@ -28,6 +28,8 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
     const [hoveredActivity, setHoveredActivity] = useState<number | null>(null);
     const [comment, setComment] = useState<string>('');
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+    const [selectedActivityIds, setSelectedActivityIds] = useState<Set<number>>(new Set());
+
     const [pendingRegistration, setPendingRegistration] = useState<{
         activityId: number;
         activityName: string;
@@ -98,6 +100,7 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                 throw new Error(errMsg);
             }
 
+            setSelectedActivityIds(prev => new Set(prev).add(activityId)); // Add to selected list
             setModalMessage("Registration successful!");
         } catch (err: unknown) {
             console.error('Failed to register activity:', err);
@@ -185,7 +188,10 @@ const DayComponent: React.FC<DayComponentProps> = ({ day, hours, selectedGuest, 
                                             onMouseLeave={() => !isTouchDevice && setHoveredActivity(null)}
                                         >
                                             <button
-                                                className="activity-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 active:bg-green-800 focus:outline-none focus:shadow-outline"
+                                                className={`activity-button text-white font-bold py-2 px-4 rounded shadow hover:shadow-lg transition ease-in-out duration-150 focus:outline-none focus:shadow-outline
+                                                    ${selectedActivityIds.has(activity.id)
+                                                        ? 'bg-blue-800 ring-2 ring-blue-300'
+                                                        : 'bg-green-500 hover:bg-green-700 active:bg-green-800'}`}
                                                 onClick={() => {
                                                     setPendingRegistration({
                                                         activityId: activity.id,
