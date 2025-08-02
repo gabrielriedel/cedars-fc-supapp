@@ -34,8 +34,10 @@ const Page: React.FC = () => {
         </Link>
 
         {/* Schedule Dropdown */}
-        <div className="w-full max-w-full sm:max-w-2xl bg-white rounded-xl shadow p-4 sm:p-6 overflow-hidden">
-          <ScheduleDropdown setSelectedGuest={setSelectedGuest} setSelectedDay={setSelectedDay} />
+        <div className="w-full max-w-full sm:max-w-2xl bg-white rounded-xl shadow p-4 sm:p-6">
+          <div className="overflow-x-auto">
+            <ScheduleDropdown setSelectedGuest={setSelectedGuest} setSelectedDay={setSelectedDay} />
+          </div>
         </div>
       </div>
     );
