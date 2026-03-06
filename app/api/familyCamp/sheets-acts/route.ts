@@ -11,9 +11,9 @@ const auth = new google.auth.GoogleAuth({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-// Set up Supabase client
-const supabaseUrl: string = 'https://cagzieozbyrkqprhhiue.supabase.co';
-const supabaseKey: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhZ3ppZW96Ynlya3FwcmhoaXVlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxNzAxMTAzNiwiZXhwIjoyMDMyNTg3MDM2fQ.3URRRd-5B8MrtCdau8ZsTMU9KEnoleQd3M7sSSHNtr4';
+// Set up Supabase client (credentials loaded from environment variables — never hardcode keys)
+const supabaseUrl: string = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey: string = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Replace with your actual sheet ID
